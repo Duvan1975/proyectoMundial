@@ -1,16 +1,87 @@
+import { useEffect, useState } from "react";
+import { ModalEditarUsuario } from "./ModalEditarUsuario";
+
 export function TablaUsuarios() {
+
+    const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const [usuarios, setUsuarios] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:8080/usuarios')
+            .then((response) => response.json())
+            .then((data) => setUsuarios(data.content))
+            .catch((error) => console.error("Error al obtener los usuarios", error));
+    }, []);
+
+    const eliminarUsuario = async (id) => {
+        console.log("Eliminando usuario con ID:", id);
+        try {
+            const response = await fetch(`http://localhost:8080/usuarios/${id}`, {
+                method: "DELETE",
+            });
+            if (response.ok) {
+                alert("Usuarios eliminado exitosamente");
+                setUsuarios(usuarios.filter((usuario) => usuario.id !== id));
+            }
+            else {
+                console.error("Error al eliminar el usuario:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Error al eliminar el usuario:", error);
+        }
+    }
+
+
     return (
-        <table className="table table-striped table-hover" id="tablaUsuarios">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Puntos</th>
-                </tr>
-            </thead>
-            <tbody id="tablabody">
+        <>
+            <table className="table table-striped table-hover" id="tablaUsuarios">
 
-            </tbody>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Puntos</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {usuarios.map((usu, index) => (
+                        <tr key={index}>
+                            <td>{usu.nombre}</td>
+                            <td>{usu.puntos}</td>
+                            <td>
+                                <button className="btn btn-sm btn-primary"
+                                    onClick={() => {
+                                        setUsuarioSeleccionado(usu);
+                                        setModalVisible(true);
+                                    }}>
+                                    Editar
+                                </button>
+                                <button className="btn btn-sm btn-danger"
+                                    onClick={() => eliminarUsuario(usu.id)}>
+                                    Eliminar
+                                </button>
+                            </td>
 
-        </table>
+
+                        </tr>
+                    ))}
+
+                </tbody>
+
+            </table>
+            <ModalEditarUsuario
+                usuario={usuarioSeleccionado} //Envía al modal los datos del usuario seleccionado
+                isVisible={modalVisible} //Controla si el modal debe mostrarse o no
+                onClose={() => setModalVisible(false)} // Función al cerrar el modal
+                onSave={(usuarioActualizado) => {
+                    setUsuarios(usuarios.map(
+                        e => e.id === usuarioActualizado.id ? usuarioActualizado: e));
+                }}
+            />
+        </>
+
+
     )
 }
