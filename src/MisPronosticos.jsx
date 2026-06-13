@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "./config";
 
 export function MisPronosticos() {
 
@@ -14,7 +15,7 @@ export function MisPronosticos() {
             localStorage.getItem("usuarioId");
 
         fetch(
-            `http://localhost:8080/pronosticos/usuario/${usuarioId}`
+            `${API_URL}/pronosticos/usuario/${usuarioId}`
         )
             .then(response => response.json())
             .then(data => {
@@ -30,7 +31,7 @@ export function MisPronosticos() {
         try {
 
             const response = await fetch(
-                `http://localhost:8080/pronosticos/partido/${partido.id}`
+                `${API_URL}/pronosticos/partido/${partido.id}`
             );
 
             const data = await response.json();

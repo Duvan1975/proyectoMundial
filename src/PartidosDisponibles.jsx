@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "./config";
 
 export function PartidosDisponibles() {
 
@@ -9,7 +10,7 @@ export function PartidosDisponibles() {
 
     useEffect(() => {
 
-        fetch(`http://localhost:8080/partidos/habilitados/${usuarioId}`)
+        fetch(`${API_URL}/partidos/habilitados/${usuarioId}`)
             .then(response => response.json())
             .then(data => {
 
@@ -24,7 +25,7 @@ export function PartidosDisponibles() {
         try {
 
             const response = await fetch(
-                "http://localhost:8080/pronosticos",
+                `${API_URL}/pronosticos`,
                 {
                     method: "POST",
                     headers: {

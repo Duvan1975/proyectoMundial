@@ -1,3 +1,5 @@
+import { API_URL } from "./config";
+
 export function AgregarTablaUsuarios() {
 
     const datos = {
@@ -6,7 +8,7 @@ export function AgregarTablaUsuarios() {
         pin: document.getElementById("pin").value
     };
 
-    fetch('http://localhost:8080/usuarios', {
+    fetch(`${API_URL}/usuarios`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -16,7 +18,7 @@ export function AgregarTablaUsuarios() {
         .then((response) => {
             if (!response.ok) {
                 // eslint-disable-next-line
-                throw new ("Error al registrar");
+                throw new Error("Error al registrar");
             }
             return response.text();
         })

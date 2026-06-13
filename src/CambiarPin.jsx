@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_URL } from "./config";
 
 export function CambiarPin() {
 
@@ -23,7 +24,7 @@ export function CambiarPin() {
         try {
 
             const response = await fetch(
-                "http://localhost:8080/usuarios/cambiar-pin",
+                `${API_URL}/usuarios/cambiar-pin`,
                 {
                     method: "PUT",
                     headers: {
@@ -70,7 +71,7 @@ export function CambiarPin() {
             console.error(error);
 
             alert(
-                "Error al cambiar el PIN"
+                `${API_URL}/usuarios/cambiar-pin`
             );
 
         }

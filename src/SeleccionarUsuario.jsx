@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "./config";
 
 export function SeleccionarUsuario() {
 
@@ -17,7 +18,7 @@ export function SeleccionarUsuario() {
 
     useEffect(() => {
 
-        fetch("http://localhost:8080/usuarios")
+        fetch(`${API_URL}/usuarios`)
             .then(response => response.json())
             .then(data => {
 
@@ -31,7 +32,7 @@ export function SeleccionarUsuario() {
 
         const response =
             await fetch(
-                "http://localhost:8080/usuarios/login",
+                `${API_URL}/usuarios/login`,
                 {
                     method: "POST",
                     headers: {
@@ -73,7 +74,7 @@ export function SeleccionarUsuario() {
 
     useEffect(() => {
 
-        fetch("http://localhost:8080/usuarios")
+        fetch(`${API_URL}/usuarios`)
             .then(response => response.json())
             .then(data => {
 

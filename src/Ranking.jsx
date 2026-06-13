@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "./config";
 
 export function Ranking() {
 
@@ -6,7 +7,7 @@ export function Ranking() {
 
     useEffect(() => {
 
-        fetch("http://localhost:8080/usuarios")
+        fetch(`${API_URL}/usuarios`)
             .then(response => response.json())
             .then(data => {
 

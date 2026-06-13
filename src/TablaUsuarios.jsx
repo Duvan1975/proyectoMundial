@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ModalEditarUsuario } from "./ModalEditarUsuario";
+import { API_URL } from "./config";
 
 export function TablaUsuarios() {
 
@@ -9,7 +10,7 @@ export function TablaUsuarios() {
     const [usuarios, setUsuarios] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8080/usuarios')
+        fetch(`${API_URL}/usuarios`)
             .then((response) => response.json())
             .then((data) => setUsuarios(data.content))
             .catch((error) => console.error("Error al obtener los usuarios", error));
@@ -18,7 +19,7 @@ export function TablaUsuarios() {
     const eliminarUsuario = async (id) => {
         console.log("Eliminando usuario con ID:", id);
         try {
-            const response = await fetch(`http://localhost:8080/usuarios/${id}`, {
+            const response = await fetch(`${API_URL}/usuarios/${id}`, {
                 method: "DELETE",
             });
             if (response.ok) {

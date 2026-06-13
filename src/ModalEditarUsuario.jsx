@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "./config";
 
 export function ModalEditarUsuario({ usuario, isVisible, onClose, onSave }) {
     const [formulario, setFormulario] = useState({
@@ -21,7 +22,7 @@ export function ModalEditarUsuario({ usuario, isVisible, onClose, onSave }) {
     };
 
     const actualizarUsuario = () => {
-        fetch(`http://localhost:8080/usuarios`, {
+        fetch(`${API_URL}/usuarios`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
