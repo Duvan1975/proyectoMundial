@@ -8,26 +8,6 @@ export function SeleccionarUsuario() {
 
     const [pin, setPin] = useState("");
 
-    const seleccionarUsuario = (
-    usuario
-) => {
-
-    setUsuarioSeleccionado(usuario);
-
-};
-
-    useEffect(() => {
-
-        fetch(`${API_URL}/usuarios`)
-            .then(response => response.json())
-            .then(data => {
-
-                setUsuarios(data.content);
-
-            });
-
-    }, []);
-
     const ingresar = async () => {
 
         const response =
