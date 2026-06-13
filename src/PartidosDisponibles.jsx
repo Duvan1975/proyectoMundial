@@ -1,6 +1,18 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "./config";
 
+const formatFechaPartido = (fechaPartido) => {
+    if (!fechaPartido) return "";
+
+    const [datePart, timePart] = fechaPartido.split("T");
+    if (!datePart || !timePart) return fechaPartido;
+
+    const [year, month, day] = datePart.split("-");
+    const [hour = "00", minute = "00"] = timePart.split(":");
+
+    return `${day}/${month}/${year} ${hour}:${minute.split(".")[0]}`;
+};
+
 export function PartidosDisponibles() {
 
     const [partidos, setPartidos] = useState([]);
@@ -122,14 +134,9 @@ export function PartidosDisponibles() {
                         </h5>
 
                         <p>
-                            {new Date(partido.fechaPartido).toLocaleString("es-CO", {
-                                timeZone: "America/Bogota",
-                                year: "numeric",
-                                month: "2-digit",
-                                day: "2-digit",
-                                hour: "2-digit",
-                                minute: "2-digit"
-                            })}
+                            {formatFechaPartido(
+                                partido.fechaPartido
+                            )}
                         </p>
 
                         <div
