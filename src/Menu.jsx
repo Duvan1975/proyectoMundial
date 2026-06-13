@@ -151,13 +151,18 @@ export function Menu() {
 
                             <hr />
 
-                            <h5>👤 Primer ingreso</h5>
+                            <h5>📌 Reglas importantes</h5>
                             <ul>
-                                <li>Selecciona tu usuario en la pantalla inicial.</li>
-                                <li>Ingresa el PIN de 4 dígitos entregado por el desarrollador.</li>
-                                <li>Una vez dentro, ve a <strong>“Cambiar PIN”</strong> y crea uno nuevo.</li>
-                                <li>Luego puedes cerrar sesión e ingresar con tu nuevo PIN.</li>
-                                <li>Si olvidas tu PIN, contacta al desarrollador.</li>
+                                <li>Los partidos pronosticados desaparecen de la lista una vez guardados.</li>
+
+                                <li>Los pronósticos solo se pueden hacer antes de que inicie cada partido.</li>
+                                <li>Una vez el partido haya comenzado, ya no será posible realizar pronósticos sobre ese juego.</li>
+
+                                <li>Los resultados de los partidos no son automáticos y serán cargados manualmente.</li>
+                                <li>La puntuación y el ranking se actualizan manualmente después de cada jornada.</li>
+
+                                <li>La pestaña de Administración no está disponible para usuarios.</li>
+                                <li>El sistema es solo para uso recreativo entre participantes.</li>
                             </ul>
 
                             <hr />
