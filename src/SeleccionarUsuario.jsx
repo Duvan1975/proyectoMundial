@@ -77,7 +77,7 @@ export function SeleccionarUsuario() {
             <div className="container mt-5">
 
                 <h2 className="mb-4">
-                    Mundial Familiar
+                    Mundial 2026
                 </h2>
 
                 <h4 className="mb-4">

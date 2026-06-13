@@ -48,14 +48,9 @@ export function Menu() {
                             className="btn btn-info btn-sm"
                             onClick={() => setVista("menu")}
                         >
-                            Inicio
+                            Instrucciones
                         </button>
-                        <button
-                            className="btn btn-success btn-sm"
-                            onClick={() => setVista("seleccionar")}
-                        >
-                            Seleccionar Usuario
-                        </button>
+
                         <button
                             className="btn btn-warning btn-sm"
                             onClick={() => setVista("pronosticos")}
@@ -113,6 +108,12 @@ export function Menu() {
                                 Listar Usuarios
                             </button>
                             <button
+                                className="btn btn-success btn-sm"
+                                onClick={() => setVista("seleccionar")}
+                            >
+                                Seleccionar Usuario
+                            </button>
+                            <button
                                 className="btn btn-danger btn-sm flex-fill flex-md-grow-0"
                                 onClick={() => {
                                     localStorage.removeItem("admin");
@@ -128,6 +129,84 @@ export function Menu() {
             )}
 
             <main>
+                {vista === "menu" && (
+                    <div className="card shadow-sm">
+                        <div className="card-body">
+
+                            <h2 className="mb-3">🏆 Mundial 2026</h2>
+
+                            <p className="lead">
+                                Bienvenido al sistema de pronósticos del Mundial 2026.
+                                Aquí podrás competir con otros participantes acertando resultados de los partidos.
+                            </p>
+
+                            <hr />
+
+                            <h5>💰 Apuesta y premio</h5>
+                            <p>
+                                Cada participante realiza un único pago de <strong>$20.000 COP</strong>.
+                                El total recaudado forma un <strong>premio acumulado</strong> que será entregado
+                                íntegramente a la persona con mayor puntuación al final del mundial.
+                            </p>
+
+                            <hr />
+
+                            <h5>👤 Primer ingreso</h5>
+                            <ul>
+                                <li>Selecciona tu usuario en la pantalla inicial.</li>
+                                <li>Ingresa el PIN de 4 dígitos entregado por el desarrollador.</li>
+                                <li>Una vez dentro, ve a <strong>“Cambiar PIN”</strong> y crea uno nuevo.</li>
+                                <li>Luego puedes cerrar sesión e ingresar con tu nuevo PIN.</li>
+                                <li>Si olvidas tu PIN, contacta al desarrollador.</li>
+                            </ul>
+
+                            <hr />
+
+                            <h5>🎯 Cómo funciona la puntuación</h5>
+                            <p><strong>Ejemplo 1:</strong> Marcador real: Colombia 2 - Brasil 1</p>
+                            <ul>
+                                <li>2-1 → <strong>10 puntos</strong> (exacto)</li>
+                                <li>1-0 → <strong>7 puntos</strong> (mismo ganador, diferencia cercana)</li>
+                                <li>3-1 → <strong>5 puntos</strong> (acierta ganador, diferencia distinta)</li>
+                                <li>1-1 → <strong>0 puntos</strong></li>
+                            </ul>
+
+                            <p><strong>Ejemplo 2:</strong> Marcador real: Colombia 1 - Brasil 1</p>
+                            <ul>
+                                <li>1-1 → <strong>10 puntos</strong></li>
+                                <li>2-2 → <strong>5 puntos</strong></li>
+                                <li>2-1 → <strong>0 puntos</strong></li>
+                            </ul>
+
+                            <hr />
+
+                            <h5>⚽ Cómo usar la app</h5>
+                            <ul>
+                                <li><strong>Pronosticar:</strong> Haz tus apuestas de los partidos disponibles. Una vez guardado, no se puede modificar.</li>
+                                <li><strong>Mis Pronósticos:</strong> Revisa tus apuestas realizadas.</li>
+                                <li><strong>Ranking:</strong> Consulta la tabla de posiciones general.</li>
+                            </ul>
+
+                            <hr />
+
+                            <h5>📌 Reglas importantes</h5>
+                            <ul>
+                                <li>Los partidos pronosticados desaparecen de la lista una vez guardados.</li>
+                                <li>Los pronósticos solo se pueden hacer antes de que inicie cada partido.</li>
+                                <li>Una vez el partido haya comenzado, ya no será posible realizar pronósticos sobre ese juego.</li>
+                                <li>La pestaña de Administración no está disponible para usuarios.</li>
+                                <li>El sistema es solo para uso recreativo entre participantes.</li>
+                            </ul>
+
+                            <hr />
+
+                            <p className="text-muted">
+                                ⚡ ¡Buena suerte y que gane el mejor!
+                            </p>
+
+                        </div>
+                    </div>
+                )}
                 {vista === "formulario" && <FormularioUsuarios />}
                 {vista === "tabla" && <TablaUsuarios />}
                 {vista === "seleccionar" && <SeleccionarUsuario />}
