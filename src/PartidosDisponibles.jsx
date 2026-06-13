@@ -122,9 +122,14 @@ export function PartidosDisponibles() {
                         </h5>
 
                         <p>
-
-                            {partido.fechaPartido}
-
+                            {new Date(partido.fechaPartido).toLocaleString("es-CO", {
+                                timeZone: "America/Bogota",
+                                year: "numeric",
+                                month: "2-digit",
+                                day: "2-digit",
+                                hour: "2-digit",
+                                minute: "2-digit"
+                            })}
                         </p>
 
                         <div
