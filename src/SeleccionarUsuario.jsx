@@ -7,6 +7,7 @@ export function SeleccionarUsuario() {
     const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
 
     const [pin, setPin] = useState("");
+    const [mostrarModal, setMostrarModal] = useState(false);
 
     const ingresar = async () => {
 
@@ -92,6 +93,7 @@ export function SeleccionarUsuario() {
                         onClick={() => {
                             setUsuarioSeleccionado(usuario);
                             setPin("");
+                            setMostrarModal(true);
                         }}
                     >
                         {usuario.nombre}
@@ -101,33 +103,89 @@ export function SeleccionarUsuario() {
 
             </div>
 
-            {usuarioSeleccionado && (
-
-                <div className="card p-3">
-
-                    <h4>
-
-                        {usuarioSeleccionado.nombre}
-
-                    </h4>
-
-                    <input
-                        type="password"
-                        className="form-control mt-2"
-                        placeholder="PIN"
-                        value={pin}
-                        onChange={(e) =>
-                            setPin(e.target.value)
-                        }
-                    />
-
-                    <button
-                        className="btn btn-success mt-3"
-                        onClick={ingresar}
+            {mostrarModal && usuarioSeleccionado && (
+                <div
+                    className="modal d-block"
+                    style={{
+                        backgroundColor:
+                            "rgba(0, 0, 0, 0.5)"
+                    }}
+                >
+                    <div
+                        className="modal-dialog modal-dialog-centered"
                     >
-                        Entrar
-                    </button>
+                        <div className="modal-content">
 
+                            <div className="modal-header">
+
+                                <h5 className="modal-title">
+                                    Ingresa tu PIN
+                                </h5>
+
+                                <button
+                                    type="button"
+                                    className="btn-close"
+                                    onClick={() => {
+                                        setMostrarModal(false);
+                                        setUsuarioSeleccionado(null);
+                                        setPin("");
+                                    }}
+                                />
+
+                            </div>
+
+                            <div className="modal-body">
+
+                                <p className="mb-3">
+                                    Usuario:{" "}
+                                    <strong>
+                                        {usuarioSeleccionado.nombre}
+                                    </strong>
+                                </p>
+
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    placeholder="PIN"
+                                    value={pin}
+                                    onChange={(e) =>
+                                        setPin(e.target.value)
+                                    }
+                                    onKeyPress={(e) => {
+                                        if (e.key === "Enter") {
+                                            ingresar();
+                                        }
+                                    }}
+                                />
+
+                            </div>
+
+                            <div className="modal-footer">
+
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    onClick={() => {
+                                        setMostrarModal(false);
+                                        setUsuarioSeleccionado(null);
+                                        setPin("");
+                                    }}
+                                >
+                                    Cancelar
+                                </button>
+
+                                <button
+                                    type="button"
+                                    className="btn btn-success"
+                                    onClick={ingresar}
+                                >
+                                    Entrar
+                                </button>
+
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             )}
         </>
