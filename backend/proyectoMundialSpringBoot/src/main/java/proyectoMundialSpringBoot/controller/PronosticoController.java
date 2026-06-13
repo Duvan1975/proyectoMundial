@@ -10,7 +10,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pronosticos")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {
+        "http://localhost:3000",
+        "https://proyecto-mundial-one.vercel.app"
+})
 public class PronosticoController {
 
     private final PronosticoService pronosticoService;

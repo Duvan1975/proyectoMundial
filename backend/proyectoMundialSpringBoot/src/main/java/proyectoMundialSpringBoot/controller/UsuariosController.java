@@ -12,7 +12,10 @@ import proyectoMundialSpringBoot.usuario.*;
 
 @RestController
 @RequestMapping("/usuarios")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {
+        "http://localhost:3000",
+        "https://proyecto-mundial-one.vercel.app"
+})
 public class UsuariosController {
 
     private final UsuarioService usuarioService;

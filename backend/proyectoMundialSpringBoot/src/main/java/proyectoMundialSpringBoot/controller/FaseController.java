@@ -11,7 +11,10 @@ import proyectoMundialSpringBoot.fase.*;
 
 @RestController
 @RequestMapping("/fases")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {
+        "http://localhost:3000",
+        "https://proyecto-mundial-one.vercel.app"
+})
 public class FaseController {
 
     private final FaseService faseService;
