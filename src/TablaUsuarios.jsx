@@ -33,7 +33,6 @@ export function TablaUsuarios() {
         }
     }
 
-
     return (
         <>
             <table className="table table-striped table-hover" id="tablaUsuarios">
@@ -63,13 +62,9 @@ export function TablaUsuarios() {
                                     Eliminar
                                 </button>
                             </td>
-
-
                         </tr>
                     ))}
-
                 </tbody>
-
             </table>
             <ModalEditarUsuario
                 usuario={usuarioSeleccionado} //Envía al modal los datos del usuario seleccionado
@@ -81,7 +76,5 @@ export function TablaUsuarios() {
                 }}
             />
         </>
-
-
     )
 }

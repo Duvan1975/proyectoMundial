@@ -2,7 +2,8 @@ export function AgregarTablaUsuarios() {
 
     const datos = {
         nombre: document.getElementById("nombre").value,
-        puntos: document.getElementById("puntos").value
+        puntos: document.getElementById("puntos").value,
+        pin: document.getElementById("pin").value
     };
 
     fetch('http://localhost:8080/usuarios', {
@@ -33,6 +34,7 @@ export function AgregarTablaUsuarios() {
         const fila = tablaUsuarios.insertRow(0);
         fila.insertCell(0).innerText = datos.nombre;
         fila.insertCell(1).innerText = datos.puntos;
+        fila.insertCell(2).innerText = datos.pin;
     }
 
 };

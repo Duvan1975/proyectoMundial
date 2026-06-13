@@ -24,6 +24,15 @@ export function FormularioUsuarios() {
                     idinput="puntos"
                     placeholderinput="Ingrese la cantidad de puntos"
                 />
+                <CuadrosTexto
+                    tamanoInput="col-md-4"
+                    titulolabel="PIN"
+                    tipoinput="password"
+                    nombreinput="pin"
+                    idinput="pin"
+                    placeholderinput="Ingrese PIN de 4 dígitos"
+                />
+
             </div>
             <button
                 onClick={AgregarTablaUsuarios}
