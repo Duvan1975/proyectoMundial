@@ -9,6 +9,8 @@ import proyectoMundialSpringBoot.usuario.Usuario;
 import proyectoMundialSpringBoot.usuario.UsuarioRepository;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Service
@@ -51,12 +53,10 @@ public class PronosticoService {
                     "Ya existe un pronóstico para este partido");
         }
 
-        if (LocalDateTime.now()
+// En lugar de UTC, usa la zona horaria de Colombia
+        if (LocalDateTime.now(ZoneId.of("America/Bogota"))
                 .isAfter(partido.getFechaPartido())) {
-
-            throw new RuntimeException(
-                    "El partido ya inició. No se permiten más pronósticos."
-            );
+            throw new RuntimeException("El partido ya inició. No se permiten más pronósticos.");
         }
 
         return repository.save(pronostico);
