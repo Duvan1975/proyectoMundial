@@ -106,6 +106,9 @@ export function PartidosDisponibles() {
 
     };
 
+    const tienePronosticoValido = (valor) =>
+        valor !== undefined && valor !== null && valor !== "";
+
     return (
 
         <div className="container">
@@ -187,6 +190,14 @@ export function PartidosDisponibles() {
 
                         <button
                             className="btn btn-success mt-3"
+                            disabled={
+                                !tienePronosticoValido(
+                                    partido.pronosticoLocal
+                                ) ||
+                                !tienePronosticoValido(
+                                    partido.pronosticoVisitante
+                                )
+                            }
                             onClick={() =>
                                 guardarPronostico(
                                     partido
