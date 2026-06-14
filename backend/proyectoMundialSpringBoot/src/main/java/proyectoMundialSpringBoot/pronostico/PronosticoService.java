@@ -54,10 +54,10 @@ public class PronosticoService {
         }
 
 // En lugar de UTC, usa la zona horaria de Colombia
-        if (LocalDateTime.now(ZoneId.of("America/Bogota"))
+        /*if (LocalDateTime.now(ZoneId.of("America/Bogota"))
                 .isAfter(partido.getFechaPartido())) {
             throw new RuntimeException("El partido ya inició. No se permiten más pronósticos.");
-        }
+        }*/
 
         return repository.save(pronostico);
     }
