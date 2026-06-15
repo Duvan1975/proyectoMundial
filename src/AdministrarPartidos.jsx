@@ -1,25 +1,22 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { API_URL } from "./config";
 
 export function AdministrarPartidos() {
 
     const [partidos, setPartidos] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
-    useEffect(() => {
-        cargarPartidos();
-    }, []);
-
-    const cargarPartidos = async () => {
+    const cargarPartidos = useCallback(async () => {
+        setLoading(true);
+        setError("");
 
         try {
-
             const response = await fetch(
-                `${API_URL}/partidos/admin`
+                `${API_URL}/partidos/habilitados`
             );
 
             const data = await response.json();
-
-            // Asegurar que siempre guardamos un array en el state
             const items = Array.isArray(data)
                 ? data
                 : Array.isArray(data?.content)
@@ -27,16 +24,17 @@ export function AdministrarPartidos() {
                     : [];
 
             setPartidos(items);
-
         } catch (error) {
-
             console.error(error);
-
-            alert("Error cargando partidos");
-
+            setError("Error cargando partidos");
+        } finally {
+            setLoading(false);
         }
+    }, []);
 
-    };
+    useEffect(() => {
+        cargarPartidos();
+    }, [cargarPartidos]);
 
     const actualizarCampo = (
         id,
@@ -57,13 +55,13 @@ export function AdministrarPartidos() {
 
     };
 
-    const guardarCambios = async (
+    const guardarResultado = async (
         partido
     ) => {
 
         if (
             !window.confirm(
-                `¿Guardar cambios de ${partido.equipoLocal} vs ${partido.equipoVisitante}?`
+                `¿Guardar resultado de ${partido.equipoLocal} vs ${partido.equipoVisitante}?`
             )
         ) {
             return;
@@ -85,10 +83,8 @@ export function AdministrarPartidos() {
                             Number(partido.golesLocal),
                         golesVisitante:
                             Number(partido.golesVisitante),
-                        finalizado:
-                            partido.finalizado,
-                        habilitadoPronostico:
-                            partido.habilitadoPronostico
+                        finalizado: true,
+                        habilitadoPronostico: false
                     })
                 }
             );
@@ -96,7 +92,7 @@ export function AdministrarPartidos() {
             if (response.ok) {
 
                 alert(
-                    "Partido actualizado correctamente"
+                    "Resultado guardado correctamente"
                 );
 
                 cargarPartidos();
@@ -131,13 +127,10 @@ export function AdministrarPartidos() {
             </h2>
 
             {partidos.length === 0 ? (
-
                 <div className="alert alert-info">
-                    No hay partidos registrados.
+                    No hay partidos habilitados.
                 </div>
-
             ) : (
-
                 partidos.map(partido => (
 
                     <div
@@ -154,138 +147,112 @@ export function AdministrarPartidos() {
                             </h5>
 
                             <p className="text-muted">
-                                Fase:
-                                {" "}
                                 {partido.fase?.nombre}
                             </p>
 
-                            <div className="row mb-3">
+<div className="row mb-3">
 
-                                <div className="col-md-6">
+    <div className="col-md-6">
+        <label className="form-label">
+            Goles Local
+        </label>
+        <input
+            type="number"
+            className="form-control"
+            value={partido.golesLocal ?? ""}
+            onChange={(e) =>
+                actualizarCampo(
+                    partido.id,
+                    "golesLocal",
+                    e.target.value
+                )
+            }
+        />
+    </div>
 
-                                    <label className="form-label">
-                                        Goles Local
-                                    </label>
+    <div className="col-md-6">
+        <label className="form-label">
+            Goles Visitante
+        </label>
+        <input
+            type="number"
+            className="form-control"
+            value={partido.golesVisitante ?? ""}
+            onChange={(e) =>
+                actualizarCampo(
+                    partido.id,
+                    "golesVisitante",
+                    e.target.value
+                )
+            }
+        />
+    </div>
 
-                                    <input
-                                        type="number"
-                                        min="0"
-                                        className="form-control"
-                                        value={
-                                            partido.golesLocal ?? ""
-                                        }
-                                        onChange={(e) =>
-                                            actualizarCampo(
-                                                partido.id,
-                                                "golesLocal",
-                                                e.target.value
-                                            )
-                                        }
-                                    />
+</div>
 
-                                </div>
+<div className="row mb-3">
 
-                                <div className="col-md-6">
+    <div className="col-md-6">
 
-                                    <label className="form-label">
-                                        Goles Visitante
-                                    </label>
+        <div className="form-check">
 
-                                    <input
-                                        type="number"
-                                        min="0"
-                                        className="form-control"
-                                        value={
-                                            partido.golesVisitante ?? ""
-                                        }
-                                        onChange={(e) =>
-                                            actualizarCampo(
-                                                partido.id,
-                                                "golesVisitante",
-                                                e.target.value
-                                            )
-                                        }
-                                    />
+            <input
+                type="checkbox"
+                className="form-check-input"
+                checked={
+                    partido.finalizado ?? false
+                }
+                onChange={(e) =>
+                    actualizarCampo(
+                        partido.id,
+                        "finalizado",
+                        e.target.checked
+                    )
+                }
+            />
 
-                                </div>
+            <label className="form-check-label">
+                Finalizado
+            </label>
 
-                            </div>
+        </div>
 
-                            <div className="row mb-3">
+    </div>
 
-                                <div className="col-md-6">
+    <div className="col-md-6">
 
-                                    <div className="form-check">
+        <div className="form-check">
 
-                                        <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            checked={
-                                                partido.finalizado ?? false
-                                            }
-                                            onChange={(e) =>
-                                                actualizarCampo(
-                                                    partido.id,
-                                                    "finalizado",
-                                                    e.target.checked
-                                                )
-                                            }
-                                        />
+            <input
+                type="checkbox"
+                className="form-check-input"
+                checked={
+                    partido.habilitadoPronostico ?? false
+                }
+                onChange={(e) =>
+                    actualizarCampo(
+                        partido.id,
+                        "habilitadoPronostico",
+                        e.target.checked
+                    )
+                }
+            />
 
-                                        <label className="form-check-label">
-                                            Finalizado
-                                        </label>
+            <label className="form-check-label">
+                Habilitado Pronóstico
+            </label>
 
-                                    </div>
+        </div>
 
-                                </div>
+    </div>
 
-                                <div className="col-md-6">
-
-                                    <div className="form-check">
-
-                                        <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            checked={
-                                                partido.habilitadoPronostico ?? false
-                                            }
-                                            onChange={(e) =>
-                                                actualizarCampo(
-                                                    partido.id,
-                                                    "habilitadoPronostico",
-                                                    e.target.checked
-                                                )
-                                            }
-                                        />
-
-                                        <label className="form-check-label">
-                                            Habilitado Pronóstico
-                                        </label>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <button
-                                className="btn btn-success"
-                                onClick={() =>
-                                    guardarCambios(
-                                        partido
-                                    )
-                                }
-                            >
-                                Guardar Cambios
-                            </button>
+</div>
 
                         </div>
 
                     </div>
 
                 ))
-
             )}
 
         </div>
