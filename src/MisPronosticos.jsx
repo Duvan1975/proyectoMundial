@@ -37,7 +37,8 @@ export function MisPronosticos() {
         let pages = 1;
 
         if (Array.isArray(data)) {
-            contenido = data.slice(paginaActual * PAGE_SIZE, (paginaActual + 1) * PAGE_SIZE);
+            const reversed = data.reverse();
+            contenido = reversed.slice(paginaActual * PAGE_SIZE, (paginaActual + 1) * PAGE_SIZE);
             pages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
         } else if (Array.isArray(data?.content)) {
             const contentArray = data.content;
@@ -50,7 +51,8 @@ export function MisPronosticos() {
                 pageNumber = data.number;
                 pages = data.totalPages;
             } else {
-                contenido = contentArray.slice(paginaActual * PAGE_SIZE, (paginaActual + 1) * PAGE_SIZE);
+                const reversed = contentArray.reverse();
+                contenido = reversed.slice(paginaActual * PAGE_SIZE, (paginaActual + 1) * PAGE_SIZE);
                 pages = Math.max(1, Math.ceil(contentArray.length / PAGE_SIZE));
             }
         }
@@ -119,6 +121,30 @@ export function MisPronosticos() {
                     Mis Pronósticos
                 </h2>
 
+                <div className="d-flex justify-content-center gap-2 mb-4">
+
+                    <button
+                        className="btn btn-secondary"
+                        disabled={pagina === 0}
+                        onClick={() => cargarPronosticos(pagina - 1)}
+                    >
+                        Anterior
+                    </button>
+
+                    <span className="align-self-center">
+                        Página {pagina + 1} de {totalPaginas}
+                    </span>
+
+                    <button
+                        className="btn btn-secondary"
+                        disabled={pagina + 1 >= totalPaginas}
+                        onClick={() => cargarPronosticos(pagina + 1)}
+                    >
+                        Siguiente
+                    </button>
+
+                </div>
+
                 {Array.isArray(pronosticos) ? pronosticos.map(pronostico => (
 
                     <div
@@ -177,30 +203,6 @@ export function MisPronosticos() {
                     </div>
 
                 )) : null}
-
-                <div className="d-flex justify-content-center gap-2 mb-3">
-
-                    <button
-                        className="btn btn-secondary"
-                        disabled={pagina === 0}
-                        onClick={() => cargarPronosticos(pagina - 1)}
-                    >
-                        Anterior
-                    </button>
-
-                    <span className="align-self-center">
-                        Página {pagina + 1} de {totalPaginas}
-                    </span>
-
-                    <button
-                        className="btn btn-secondary"
-                        disabled={pagina + 1 >= totalPaginas}
-                        onClick={() => cargarPronosticos(pagina + 1)}
-                    >
-                        Siguiente
-                    </button>
-
-                </div>
 
             </div>
             {mostrarModal && (
