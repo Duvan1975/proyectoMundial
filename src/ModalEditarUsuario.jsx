@@ -45,6 +45,7 @@ export function ModalEditarUsuario({ usuario, isVisible, onClose, onSave }) {
     };
 
     if (!isVisible) return null;
+    
     return (
         <div className="modal" style={{ display: "block", backgroundColor: "#000000aa" }}>
             <div className="modal-dialog">
