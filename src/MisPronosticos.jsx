@@ -18,15 +18,27 @@ export function MisPronosticos() {
         const usuarioId =
             localStorage.getItem("usuarioId");
 
+        if (!usuarioId) {
+            setPronosticos([]);
+            setPagina(0);
+            setTotalPaginas(0);
+            return;
+        }
+
         const response = await fetch(
             `${API_URL}/pronosticos/usuario/${usuarioId}?page=${paginaActual}&size=20`
         );
 
         const data = await response.json();
+        const contenido = Array.isArray(data)
+            ? data
+            : Array.isArray(data?.content)
+            ? data.content
+            : [];
 
-        setPronosticos(data.content);
-        setPagina(data.number);
-        setTotalPaginas(data.totalPages);
+        setPronosticos(contenido);
+        setPagina(typeof data?.number === "number" ? data.number : paginaActual);
+        setTotalPaginas(typeof data?.totalPages === "number" ? data.totalPages : 1);
 
     };
 
@@ -88,7 +100,7 @@ export function MisPronosticos() {
                     Mis Pronósticos
                 </h2>
 
-                {pronosticos.map(pronostico => (
+                {Array.isArray(pronosticos) ? pronosticos.map(pronostico => (
 
                     <div
                         key={pronostico.id}
@@ -145,7 +157,7 @@ export function MisPronosticos() {
 
                     </div>
 
-                ))}
+                )) : null}
 
                 <div className="d-flex justify-content-center gap-2 mb-3">
 
