@@ -14,7 +14,7 @@ export function AdministrarPartidos() {
         try {
 
             const response = await fetch(
-                `${API_URL}/partidos/habilitados`
+                `${API_URL}/partidos/admin`
             );
 
             const data = await response.json();
@@ -50,13 +50,13 @@ export function AdministrarPartidos() {
 
     };
 
-    const guardarResultado = async (
+    const guardarCambios = async (
         partido
     ) => {
 
         if (
             !window.confirm(
-                `¿Guardar resultado de ${partido.equipoLocal} vs ${partido.equipoVisitante}?`
+                `¿Guardar cambios de ${partido.equipoLocal} vs ${partido.equipoVisitante}?`
             )
         ) {
             return;
@@ -72,24 +72,24 @@ export function AdministrarPartidos() {
                         "Content-Type":
                             "application/json"
                     },
-body: JSON.stringify({
-    id: partido.id,
-    golesLocal:
-        Number(partido.golesLocal),
-    golesVisitante:
-        Number(partido.golesVisitante),
-    finalizado:
-        partido.finalizado,
-    habilitadoPronostico:
-        partido.habilitadoPronostico
-})
+                    body: JSON.stringify({
+                        id: partido.id,
+                        golesLocal:
+                            Number(partido.golesLocal),
+                        golesVisitante:
+                            Number(partido.golesVisitante),
+                        finalizado:
+                            partido.finalizado,
+                        habilitadoPronostico:
+                            partido.habilitadoPronostico
+                    })
                 }
             );
 
             if (response.ok) {
 
                 alert(
-                    "Resultado guardado correctamente"
+                    "Partido actualizado correctamente"
                 );
 
                 cargarPartidos();
@@ -124,10 +124,13 @@ body: JSON.stringify({
             </h2>
 
             {partidos.length === 0 ? (
+
                 <div className="alert alert-info">
-                    No hay partidos habilitados.
+                    No hay partidos registrados.
                 </div>
+
             ) : (
+
                 partidos.map(partido => (
 
                     <div
@@ -144,15 +147,17 @@ body: JSON.stringify({
                             </h5>
 
                             <p className="text-muted">
+                                Fase:
+                                {" "}
                                 {partido.fase?.nombre}
                             </p>
 
-                            <div className="row g-3">
+                            <div className="row mb-3">
 
-                                <div className="col-md-5">
+                                <div className="col-md-6">
 
                                     <label className="form-label">
-                                        {partido.equipoLocal}
+                                        Goles Local
                                     </label>
 
                                     <input
@@ -173,10 +178,10 @@ body: JSON.stringify({
 
                                 </div>
 
-                                <div className="col-md-5">
+                                <div className="col-md-6">
 
                                     <label className="form-label">
-                                        {partido.equipoVisitante}
+                                        Goles Visitante
                                     </label>
 
                                     <input
@@ -196,6 +201,10 @@ body: JSON.stringify({
                                     />
 
                                 </div>
+
+                            </div>
+
+                            <div className="row mb-3">
 
                                 <div className="col-md-6">
 
@@ -251,28 +260,25 @@ body: JSON.stringify({
 
                                 </div>
 
-                                <div className="col-md-2 d-flex align-items-end">
-
-                                    <button
-                                        className="btn btn-success w-100"
-                                        onClick={() =>
-                                            guardarResultado(
-                                                partido
-                                            )
-                                        }
-                                    >
-                                        Guardar
-                                    </button>
-
-                                </div>
-
                             </div>
+
+                            <button
+                                className="btn btn-success"
+                                onClick={() =>
+                                    guardarCambios(
+                                        partido
+                                    )
+                                }
+                            >
+                                Guardar Cambios
+                            </button>
 
                         </div>
 
                     </div>
 
                 ))
+
             )}
 
         </div>

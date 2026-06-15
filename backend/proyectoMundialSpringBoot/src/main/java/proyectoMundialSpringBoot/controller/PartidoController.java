@@ -1,6 +1,7 @@
 package proyectoMundialSpringBoot.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -18,6 +19,8 @@ import java.util.List;
         "https://proyecto-mundial-one.vercel.app"
 })
 public class PartidoController {
+
+    @Autowired PartidoRepository partidoRepository;
 
     private final PartidoService partidoService;
 
@@ -66,5 +69,11 @@ public class PartidoController {
 
         return ResponseEntity.ok(
                 partidoService.listarPartidosDisponibles(usuarioId));
+    }
+
+    @GetMapping("/admin")
+    public ResponseEntity<List<Partido>> listarTodos() {
+        return ResponseEntity.ok(
+                partidoRepository.findAll());
     }
 }
