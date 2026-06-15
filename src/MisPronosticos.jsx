@@ -12,6 +12,7 @@ export function MisPronosticos() {
     const [pagina, setPagina] = useState(0);
     const [totalPaginas, setTotalPaginas] = useState(0);
     const TOTAL_PARTICIPANTES = 21; // total de participantes en el pronóstico
+    const PAGE_SIZE = 5;
 
     const cargarPronosticos = async (paginaActual = 0) => {
 
@@ -26,19 +27,37 @@ export function MisPronosticos() {
         }
 
         const response = await fetch(
-            `${API_URL}/pronosticos/usuario/${usuarioId}?page=${paginaActual}&size=5`
+            `${API_URL}/pronosticos/usuario/${usuarioId}?page=${paginaActual}&size=${PAGE_SIZE}`
         );
 
         const data = await response.json();
-        const contenido = Array.isArray(data)
-            ? data
-            : Array.isArray(data?.content)
-            ? data.content
-            : [];
+
+        let contenido = [];
+        let pageNumber = paginaActual;
+        let pages = 1;
+
+        if (Array.isArray(data)) {
+            contenido = data.slice(paginaActual * PAGE_SIZE, (paginaActual + 1) * PAGE_SIZE);
+            pages = Math.max(1, Math.ceil(data.length / PAGE_SIZE));
+        } else if (Array.isArray(data?.content)) {
+            const contentArray = data.content;
+            const hasServerPaging =
+                typeof data.number === "number" &&
+                typeof data.totalPages === "number";
+
+            if (hasServerPaging) {
+                contenido = contentArray;
+                pageNumber = data.number;
+                pages = data.totalPages;
+            } else {
+                contenido = contentArray.slice(paginaActual * PAGE_SIZE, (paginaActual + 1) * PAGE_SIZE);
+                pages = Math.max(1, Math.ceil(contentArray.length / PAGE_SIZE));
+            }
+        }
 
         setPronosticos(contenido);
-        setPagina(typeof data?.number === "number" ? data.number : paginaActual);
-        setTotalPaginas(typeof data?.totalPages === "number" ? data.totalPages : 1);
+        setPagina(pageNumber);
+        setTotalPaginas(pages);
 
     };
 
