@@ -54,23 +54,17 @@ export function SeleccionarUsuario() {
     };
 
     useEffect(() => {
+        const cargarUsuarios = async () => {
+            try {
+                const response = await fetch(`${API_URL}/usuarios?size=1000`);
+                const data = await response.json();
+                setUsuarios(Array.isArray(data) ? data : data.content || []);
+            } catch (error) {
+                console.error("Error cargando usuarios", error);
+            }
+        };
 
-        fetch(`${API_URL}/usuarios`)
-            .then(response => response.json())
-            .then(data => {
-
-                setUsuarios(data.content);
-
-            })
-            .catch(error => {
-
-                console.error(
-                    "Error cargando usuarios",
-                    error
-                );
-
-            });
-
+        cargarUsuarios();
     }, []);
 
     return (
