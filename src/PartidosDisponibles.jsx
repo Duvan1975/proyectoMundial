@@ -112,40 +112,28 @@ export function PartidosDisponibles() {
     return (
 
         <div className="container">
-
             <h2>
                 Partidos Disponibles
             </h2>
-
             {partidos.map(partido => (
-
                 <div
                     key={partido.id}
                     className="card mb-3"
                 >
-
                     <div className="card-body">
-
                         <h5>
-
                             {partido.equipoLocal}
-
                             {" vs "}
-
                             {partido.equipoVisitante}
-
                         </h5>
-
                         <p>
                             {formatFechaPartido(
                                 partido.fechaPartido
                             )}
                         </p>
-
                         <div
                             className="d-flex gap-2"
                         >
-
                             <input
                                 type="number"
                                 min="0"
@@ -165,7 +153,6 @@ export function PartidosDisponibles() {
                                     )
                                 }
                             />
-
                             <input
                                 type="number"
                                 min="0"
@@ -185,9 +172,7 @@ export function PartidosDisponibles() {
                                     )
                                 }
                             />
-
                         </div>
-
                         <button
                             className="btn btn-success mt-3"
                             disabled={
@@ -204,19 +189,11 @@ export function PartidosDisponibles() {
                                 )
                             }
                         >
-
                             Guardar Pronóstico
-
                         </button>
-
                     </div>
-
                 </div>
-
             ))}
-
         </div>
-
     );
-
 }

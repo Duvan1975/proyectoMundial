@@ -7,6 +7,7 @@ import { MisPronosticos } from "./MisPronosticos";
 import { Ranking } from "./Ranking";
 import { PinAdministrador } from "./PinAdministrador";
 import { CambiarPin } from "./CambiarPin";
+import { AdministrarPartidos } from "./AdministrarPartidos";
 
 export function Menu() {
 
@@ -114,6 +115,14 @@ export function Menu() {
                                 Seleccionar Usuario
                             </button>
                             <button
+                                className="btn btn-primary btn-sm"
+                                onClick={() =>
+                                    setVista("administrarPartidos")
+                                }
+                            >
+                                Administrar Partidos
+                            </button>
+                            <button
                                 className="btn btn-danger btn-sm flex-fill flex-md-grow-0"
                                 onClick={() => {
                                     localStorage.removeItem("admin");
@@ -218,6 +227,7 @@ export function Menu() {
                 {vista === "pronosticos" && <PartidosDisponibles />}
                 {vista === "misPronosticos" && <MisPronosticos />}
                 {vista === "ranking" && <Ranking />}
+                {vista === "administrarPartidos" && <AdministrarPartidos />}
                 {vista === "admin" && !esAdmin && (
                     <PinAdministrador
                         onSuccess={() => {
