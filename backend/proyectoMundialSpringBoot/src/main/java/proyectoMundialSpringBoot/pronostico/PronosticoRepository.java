@@ -1,5 +1,7 @@
 package proyectoMundialSpringBoot.pronostico;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -20,5 +22,7 @@ public interface PronosticoRepository extends JpaRepository<Pronostico, Long> {
         """)
     Integer obtenerPuntosTotalesUsuario(Long usuarioId);
 
-    List<Pronostico> findByUsuarioId(Long usuarioId);
+    Page<Pronostico> findByUsuarioId(
+            Long usuarioId,
+            Pageable pageable);
 }

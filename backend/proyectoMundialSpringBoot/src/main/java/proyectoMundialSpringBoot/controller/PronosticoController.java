@@ -1,5 +1,9 @@
 package proyectoMundialSpringBoot.controller;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import proyectoMundialSpringBoot.pronostico.DatosRegistroPronostico;
@@ -48,10 +52,17 @@ public class PronosticoController {
     }
 
     @GetMapping("/usuario/{usuarioId}")
-    public ResponseEntity<List<Pronostico>> listarPorUsuario(
-            @PathVariable Long usuarioId) {
+    public ResponseEntity<Page<Pronostico>> listarPorUsuario(
+            @PathVariable Long usuarioId,
+            @PageableDefault(
+                    size = 20,
+                    sort = "id",
+                    direction = Sort.Direction.DESC)
+            Pageable pageable) {
 
         return ResponseEntity.ok(
-                pronosticoService.listarPorUsuario(usuarioId));
+                pronosticoService.listarPorUsuario(
+                        usuarioId,
+                        pageable));
     }
 }

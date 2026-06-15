@@ -171,8 +171,8 @@ export function Menu() {
                             <p><strong>Ejemplo 1:</strong> Marcador real: Colombia 2 - Brasil 1</p>
                             <ul>
                                 <li>2-1 → <strong>10 puntos</strong> (exacto)</li>
-                                <li>1-0 → <strong>7 puntos</strong> (mismo ganador, diferencia cercana)</li>
-                                <li>3-1 → <strong>5 puntos</strong> (acierta ganador, diferencia distinta)</li>
+                                <li>1-0 → <strong>7 puntos</strong> (mismo ganador, mismos goles de diferencia)</li>
+                                <li>3-1 → <strong>5 puntos</strong> (acierta ganador, diferencia de goles distinta)</li>
                                 <li>1-1 → <strong>0 puntos</strong></li>
                             </ul>
 

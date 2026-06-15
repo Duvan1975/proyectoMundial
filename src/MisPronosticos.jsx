@@ -6,23 +6,33 @@ export function MisPronosticos() {
     const [pronosticos, setPronosticos] = useState([]);
     const [pronosticosPartido, setPronosticosPartido] = useState([]);
     const [mostrarModal, setMostrarModal] = useState(false);
-    //const [partidoSeleccionado, setPartidoSeleccionado] = useState(null);
+    const [partidoSeleccionado, setPartidoSeleccionado] = useState(null);
     const [tituloPartido, setTituloPartido] = useState("");
 
-    useEffect(() => {
+    const [pagina, setPagina] = useState(0);
+    const [totalPaginas, setTotalPaginas] = useState(0);
+    const TOTAL_PARTICIPANTES = 21; // total de participantes en el pronóstico
+
+    const cargarPronosticos = async (paginaActual = 0) => {
 
         const usuarioId =
             localStorage.getItem("usuarioId");
 
-        fetch(
-            `${API_URL}/pronosticos/usuario/${usuarioId}`
-        )
-            .then(response => response.json())
-            .then(data => {
+        const response = await fetch(
+            `${API_URL}/pronosticos/usuario/${usuarioId}?page=${paginaActual}&size=20`
+        );
 
-                setPronosticos(data);
+        const data = await response.json();
 
-            });
+        setPronosticos(data.content);
+        setPagina(data.number);
+        setTotalPaginas(data.totalPages);
+
+    };
+
+    useEffect(() => {
+
+        cargarPronosticos();
 
     }, []);
 
@@ -42,22 +52,33 @@ export function MisPronosticos() {
             );
 
             setPronosticosPartido(data);
+            setPartidoSeleccionado(partido);
 
             setTituloPartido(
-                `${partido.equipoLocal} vs ${partido.equipoVisitante}`
+                `${partido.equipoLocal} vs ${partido.equipoVisitante} (${partido.golesLocal ?? '-'} - ${partido.golesVisitante ?? '-'})`
             );
 
             setMostrarModal(true);
 
         } catch (error) {
-
             console.error(error);
-
             alert("Error cargando pronósticos");
-
         }
 
     };
+
+    const resumenPronosticos = pronosticosPartido.reduce(
+        (acc, p) => {
+            const l = Number(p.golesLocalPronosticado);
+            const v = Number(p.golesVisitantePronosticado);
+            if (isNaN(l) || isNaN(v)) return acc;
+            if (l > v) acc.local++;
+            else if (l < v) acc.visitante++;
+            else acc.empate++;
+            return acc;
+        },
+        { local: 0, empate: 0, visitante: 0 }
+    );
 
     return (
         <>
@@ -112,16 +133,7 @@ export function MisPronosticos() {
 
                             </p>
 
-                            <p>
-
-                                Puntos:
-
-                                {" "}
-
-                                {pronostico.puntosObtenidos
-                                    ?? "Pendiente"}
-
-                            </p>
+                            {/* Campo de puntos removido por solicitud */}
                             <button
                                 className="btn btn-info mt-2"
                                 onClick={() => verPronosticos(pronostico.partido)}
@@ -134,6 +146,30 @@ export function MisPronosticos() {
                     </div>
 
                 ))}
+
+                <div className="d-flex justify-content-center gap-2 mb-3">
+
+                    <button
+                        className="btn btn-secondary"
+                        disabled={pagina === 0}
+                        onClick={() => cargarPronosticos(pagina - 1)}
+                    >
+                        Anterior
+                    </button>
+
+                    <span className="align-self-center">
+                        Página {pagina + 1} de {totalPaginas}
+                    </span>
+
+                    <button
+                        className="btn btn-secondary"
+                        disabled={pagina + 1 >= totalPaginas}
+                        onClick={() => cargarPronosticos(pagina + 1)}
+                    >
+                        Siguiente
+                    </button>
+
+                </div>
 
             </div>
             {mostrarModal && (
@@ -157,6 +193,10 @@ export function MisPronosticos() {
 
                                     {tituloPartido}
 
+                                    <small className="text-muted ms-2">
+                                        {pronosticosPartido.length} pronosticaron — {Math.max(0, TOTAL_PARTICIPANTES - pronosticosPartido.length)} faltan
+                                    </small>
+
                                 </h5>
 
                                 <button
@@ -170,6 +210,21 @@ export function MisPronosticos() {
                             </div>
 
                             <div className="modal-body">
+
+                                <div className="mb-3">
+                                    <p>
+                                        <strong>Predicciones:</strong>
+                                    </p>
+                                    <p>
+                                        <strong>{resumenPronosticos.local}</strong> personas pronosticaron victoria de <strong>{partidoSeleccionado?.equipoLocal ?? "equipo local"}</strong>
+                                    </p>
+                                    <p>
+                                        <strong>{resumenPronosticos.empate}</strong> personas pronosticaron empate
+                                    </p>
+                                    <p>
+                                        <strong>{resumenPronosticos.visitante}</strong> personas pronosticaron victoria de <strong>{partidoSeleccionado?.equipoVisitante ?? "equipo visitante"}</strong>
+                                    </p>
+                                </div>
 
                                 <table className="table table-striped">
 

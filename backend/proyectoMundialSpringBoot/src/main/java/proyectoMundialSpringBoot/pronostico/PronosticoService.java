@@ -2,6 +2,8 @@ package proyectoMundialSpringBoot.pronostico;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import proyectoMundialSpringBoot.partido.Partido;
 import proyectoMundialSpringBoot.partido.PartidoRepository;
@@ -137,7 +139,12 @@ public class PronosticoService {
         }
     }
 
-    public List<Pronostico> listarPorUsuario(Long usuarioId) {
-        return repository.findByUsuarioId(usuarioId);
+    public Page<Pronostico> listarPorUsuario(
+            Long usuarioId,
+            Pageable pageable) {
+
+        return repository.findByUsuarioId(
+                usuarioId,
+                pageable);
     }
 }
