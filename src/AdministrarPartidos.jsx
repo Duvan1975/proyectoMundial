@@ -19,7 +19,14 @@ export function AdministrarPartidos() {
 
             const data = await response.json();
 
-            setPartidos(data);
+            // Asegurar que siempre guardamos un array en el state
+            const items = Array.isArray(data)
+                ? data
+                : Array.isArray(data?.content)
+                    ? data.content
+                    : [];
+
+            setPartidos(items);
 
         } catch (error) {
 

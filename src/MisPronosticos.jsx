@@ -79,12 +79,21 @@ export function MisPronosticos() {
 
             const data = await response.json();
 
-            data.sort(
-                (a, b) =>
-                    b.usuario.puntos - a.usuario.puntos
-            );
+            // Normalizar a array por seguridad
+            const items = Array.isArray(data)
+                ? data
+                : Array.isArray(data?.content)
+                    ? data.content
+                    : [];
 
-            setPronosticosPartido(data);
+            // Ordenar si es array
+            if (Array.isArray(items)) {
+                items.sort(
+                    (a, b) => b.usuario?.puntos - a.usuario?.puntos
+                );
+            }
+
+            setPronosticosPartido(items);
             setPartidoSeleccionado(partido);
 
             setTituloPartido(
@@ -100,8 +109,8 @@ export function MisPronosticos() {
 
     };
 
-    const resumenPronosticos = pronosticosPartido.reduce(
-        (acc, p) => {
+    const resumenPronosticos = Array.isArray(pronosticosPartido)
+        ? pronosticosPartido.reduce((acc, p) => {
             const l = Number(p.golesLocalPronosticado);
             const v = Number(p.golesVisitantePronosticado);
             if (isNaN(l) || isNaN(v)) return acc;
@@ -109,9 +118,8 @@ export function MisPronosticos() {
             else if (l < v) acc.visitante++;
             else acc.empate++;
             return acc;
-        },
-        { local: 0, empate: 0, visitante: 0 }
-    );
+        }, { local: 0, empate: 0, visitante: 0 })
+        : { local: 0, empate: 0, visitante: 0 };
 
     return (
         <>
@@ -274,7 +282,7 @@ export function MisPronosticos() {
 
                                     <tbody>
 
-                                        {pronosticosPartido.map(
+                                        {Array.isArray(pronosticosPartido) ? pronosticosPartido.map(
                                             (p, index) => (
 
                                                 <tr key={p.id}>
@@ -293,11 +301,11 @@ export function MisPronosticos() {
                                                     </td>
 
                                                     <td>
-                                                        {p.usuario.nombre}
+                                                        {p.usuario?.nombre}
                                                     </td>
 
                                                     <td>
-                                                        {p.usuario.puntos}
+                                                        {p.usuario?.puntos}
                                                     </td>
 
                                                     <td>
@@ -313,7 +321,7 @@ export function MisPronosticos() {
                                                 </tr>
 
                                             )
-                                        )}
+                                        ) : null}
 
                                     </tbody>
 
