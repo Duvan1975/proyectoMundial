@@ -178,7 +178,7 @@ export function MisPronosticos() {
                                         <tr>
                                             <th>Pos.</th>
                                             <th>Usuario</th>
-                                            <th>Puntos</th>
+                                            <th>Total Puntos</th>
                                             <th>Pronóstico</th>
                                         </tr>
 

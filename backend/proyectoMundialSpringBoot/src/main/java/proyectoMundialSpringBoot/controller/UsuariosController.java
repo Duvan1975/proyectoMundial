@@ -35,7 +35,7 @@ public class UsuariosController {
     @GetMapping
     public Page<DatosListadoUsuarios> listadoUsuarios(
             @PageableDefault(
-                    size = 20,
+                    size = 30,
                     sort = "puntos",
                     direction = Sort.Direction.DESC)
             Pageable paginacion) {
