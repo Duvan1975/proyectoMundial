@@ -58,6 +58,14 @@ export function SeleccionarUsuario() {
             try {
                 const response = await fetch(`${API_URL}/usuarios?size=1000`);
                 const data = await response.json();
+
+
+                console.log("DATA:", data);
+console.log("CONTENT:", data.content);
+console.log("LENGTH:", (Array.isArray(data) ? data : data.content || []).length);
+
+setUsuarios(Array.isArray(data) ? data : data.content || []);
+
                 setUsuarios(Array.isArray(data) ? data : data.content || []);
             } catch (error) {
                 console.error("Error cargando usuarios", error);
@@ -66,6 +74,8 @@ export function SeleccionarUsuario() {
 
         cargarUsuarios();
     }, []);
+
+    
 
     return (
         <>
