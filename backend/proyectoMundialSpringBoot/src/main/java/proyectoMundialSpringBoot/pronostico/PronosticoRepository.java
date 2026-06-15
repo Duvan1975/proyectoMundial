@@ -25,4 +25,8 @@ public interface PronosticoRepository extends JpaRepository<Pronostico, Long> {
     Page<Pronostico> findByUsuarioId(
             Long usuarioId,
             Pageable pageable);
+
+    Page<Pronostico> findByUsuarioIdOrderByPartidoIdDesc(
+            Long usuarioId,
+            Pageable pageable);
 }

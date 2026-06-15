@@ -55,9 +55,10 @@ public class PronosticoController {
     public ResponseEntity<Page<Pronostico>> listarPorUsuario(
             @PathVariable Long usuarioId,
             @PageableDefault(
-                    size = 20,
-                    sort = "id",
-                    direction = Sort.Direction.DESC)
+                    size = 5
+                    //sort = "id",
+                    //direction = Sort.Direction.ASC
+                    )
             Pageable pageable) {
 
         return ResponseEntity.ok(

@@ -10,9 +10,6 @@ import proyectoMundialSpringBoot.partido.PartidoRepository;
 import proyectoMundialSpringBoot.usuario.Usuario;
 import proyectoMundialSpringBoot.usuario.UsuarioRepository;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.List;
 
 @Service
@@ -139,11 +136,20 @@ public class PronosticoService {
         }
     }
 
-    public Page<Pronostico> listarPorUsuario(
+    /*public Page<Pronostico> listarPorUsuario(
             Long usuarioId,
             Pageable pageable) {
 
         return repository.findByUsuarioId(
+                usuarioId,
+                pageable);
+    }*/
+
+    public Page<Pronostico> listarPorUsuario(
+            Long usuarioId,
+            Pageable pageable) {
+
+        return repository.findByUsuarioIdOrderByPartidoIdDesc(
                 usuarioId,
                 pageable);
     }

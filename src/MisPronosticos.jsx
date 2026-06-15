@@ -26,7 +26,7 @@ export function MisPronosticos() {
         }
 
         const response = await fetch(
-            `${API_URL}/pronosticos/usuario/${usuarioId}?page=${paginaActual}&size=20`
+            `${API_URL}/pronosticos/usuario/${usuarioId}?page=${paginaActual}&size=5`
         );
 
         const data = await response.json();
@@ -206,7 +206,7 @@ export function MisPronosticos() {
                                     {tituloPartido}
 
                                     <small className="text-muted ms-2">
-                                        {pronosticosPartido.length} pronosticaron — {Math.max(0, TOTAL_PARTICIPANTES - pronosticosPartido.length)} faltan
+                                        {pronosticosPartido.length} de {TOTAL_PARTICIPANTES} han pronosticado
                                     </small>
 
                                 </h5>
