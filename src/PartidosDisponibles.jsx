@@ -23,11 +23,35 @@ export function PartidosDisponibles() {
     useEffect(() => {
 
         fetch(`${API_URL}/partidos/disponibles-edicion/${usuarioId}`)
-            .then(response => response.json())
+            .then(async response => {
+                if (!response.ok) {
+                    console.error("Fetch error:", response.status, response.statusText);
+                    // keep partidos as array to avoid map errors
+                    setPartidos([]);
+                    return null;
+                }
+
+                try {
+                    return await response.json();
+                } catch (err) {
+                    console.error("Error parsing JSON from /partidos/disponibles-edicion:", err);
+                    setPartidos([]);
+                    return null;
+                }
+            })
             .then(data => {
-
-                setPartidos(data);
-
+                if (Array.isArray(data)) {
+                    setPartidos(data);
+                } else if (data === null) {
+                    // already handled above
+                } else {
+                    console.error("Unexpected response shape for partidos:", data);
+                    setPartidos([]);
+                }
+            })
+            .catch(err => {
+                console.error("Network error fetching partidos:", err);
+                setPartidos([]);
             });
 
     }, [usuarioId]);
