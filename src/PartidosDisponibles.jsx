@@ -22,7 +22,7 @@ export function PartidosDisponibles() {
 
     useEffect(() => {
 
-        fetch(`${API_URL}/partidos/habilitados/${usuarioId}`)
+        fetch(`${API_URL}/partidos/disponibles-edicion/${usuarioId}`)
             .then(response => response.json())
             .then(data => {
 
@@ -34,12 +34,18 @@ export function PartidosDisponibles() {
 
     const guardarPronostico = async (partido) => {
 
+        console.log(partido);
         try {
+
+            const metodo =
+                partido.yaPronosticado
+                    ? "PUT"
+                    : "POST";
 
             const response = await fetch(
                 `${API_URL}/pronosticos`,
                 {
-                    method: "POST",
+                    method: metodo,
                     headers: {
                         "Content-Type":
                             "application/json"
@@ -143,7 +149,7 @@ export function PartidosDisponibles() {
                                 }
                                 value={
                                     partido.pronosticoLocal
-                                    || ""
+                                    ?? ""
                                 }
                                 onChange={(e) =>
                                     actualizarPronostico(
@@ -162,7 +168,7 @@ export function PartidosDisponibles() {
                                 }
                                 value={
                                     partido.pronosticoVisitante
-                                    || ""
+                                    ?? ""
                                 }
                                 onChange={(e) =>
                                     actualizarPronostico(
