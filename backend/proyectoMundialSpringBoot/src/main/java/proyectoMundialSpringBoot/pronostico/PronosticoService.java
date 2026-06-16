@@ -153,4 +153,25 @@ public class PronosticoService {
                 usuarioId,
                 pageable);
     }
+
+    @Transactional
+    public Pronostico actualizar(
+            DatosActualizarPronostico datos) {
+
+        Pronostico pronostico =
+                repository.findByUsuarioIdAndPartidoId(
+                                datos.usuarioId(),
+                                datos.partidoId())
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Pronóstico no encontrado"));
+
+        pronostico.setGolesLocalPronosticado(
+                datos.golesLocalPronosticado());
+
+        pronostico.setGolesVisitantePronosticado(
+                datos.golesVisitantePronosticado());
+
+        return pronostico;
+    }
 }

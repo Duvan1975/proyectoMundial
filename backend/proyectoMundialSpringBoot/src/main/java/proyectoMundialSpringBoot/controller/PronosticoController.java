@@ -6,6 +6,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import proyectoMundialSpringBoot.pronostico.DatosActualizarPronostico;
 import proyectoMundialSpringBoot.pronostico.DatosRegistroPronostico;
 import proyectoMundialSpringBoot.pronostico.Pronostico;
 import proyectoMundialSpringBoot.pronostico.PronosticoService;
@@ -65,5 +66,13 @@ public class PronosticoController {
                 pronosticoService.listarPorUsuario(
                         usuarioId,
                         pageable));
+    }
+
+    @PutMapping
+    public ResponseEntity actualizar(
+            @RequestBody DatosActualizarPronostico datos) {
+
+        return ResponseEntity.ok(
+                pronosticoService.actualizar(datos));
     }
 }

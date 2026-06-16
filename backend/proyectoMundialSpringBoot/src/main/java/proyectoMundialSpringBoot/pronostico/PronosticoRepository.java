@@ -6,10 +6,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PronosticoRepository extends JpaRepository<Pronostico, Long> {
 
     boolean existsByUsuarioIdAndPartidoId(
+            Long usuarioId,
+            Long partidoId);
+
+    Optional<Pronostico> findByUsuarioIdAndPartidoId(
             Long usuarioId,
             Long partidoId);
 
