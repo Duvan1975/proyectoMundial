@@ -76,4 +76,14 @@ public class PartidoController {
         return ResponseEntity.ok(
                 partidoRepository.findAll());
     }
+
+    @GetMapping("/disponibles-edicion/{usuarioId}")
+    public ResponseEntity<List<DatosPartidoDisponible>>
+    listarDisponiblesEdicion(
+            @PathVariable Long usuarioId) {
+
+        return ResponseEntity.ok(
+                partidoService.listarDisponiblesEdicion(
+                        usuarioId));
+    }
 }

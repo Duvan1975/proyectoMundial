@@ -9,9 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 import proyectoMundialSpringBoot.fase.Fase;
 import proyectoMundialSpringBoot.fase.FaseRepository;
+import proyectoMundialSpringBoot.pronostico.Pronostico;
+import proyectoMundialSpringBoot.pronostico.PronosticoRepository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PartidoService {
@@ -19,6 +23,9 @@ public class PartidoService {
     @Autowired PartidoRepository partidoRepository;
 
     @Autowired FaseRepository faseRepository;
+
+    @Autowired
+    PronosticoRepository pronosticoRepository;
 
     public ResponseEntity<DatosRespuestaPartido> registrarPartido(
             DatosRegistroPartido datos, UriComponentsBuilder uriComponentsBuilder) {
@@ -99,12 +106,54 @@ public class PartidoService {
     }
 
     public List<Partido> listarPartidosHabilitados() {
+
         return partidoRepository.findByHabilitadoPronosticoTrue();
     }
 
     public List<Partido> listarPartidosDisponibles(Long usuarioId) {
 
         return partidoRepository.buscarPartidosDisponibles(usuarioId);
+    }
+
+    public List<DatosPartidoDisponible>
+    listarDisponiblesEdicion(Long usuarioId) {
+
+        List<Pronostico> pronosticos =
+                pronosticoRepository.findByUsuarioId(usuarioId);
+
+        Map<Long, Pronostico> pronosticosPorPartido =
+                pronosticos.stream()
+                        .collect(Collectors.toMap(
+                                p -> p.getPartido().getId(),
+                                p -> p
+                        ));
+
+        return partidoRepository.findByHabilitadoPronosticoTrue()
+                .stream()
+                .map(partido -> {
+
+                    Pronostico pronostico =
+                            pronosticosPorPartido.get(
+                                    partido.getId());
+
+                    return new DatosPartidoDisponible(
+                            partido.getId(),
+                            partido.getEquipoLocal(),
+                            partido.getEquipoVisitante(),
+                            partido.getFechaPartido(),
+
+                            pronostico != null
+                                    ? pronostico.getGolesLocalPronosticado()
+                                    : null,
+
+                            pronostico != null
+                                    ? pronostico.getGolesVisitantePronosticado()
+                                    : null,
+
+                            pronostico != null
+                    );
+                })
+                .toList();
     }
 
 }
