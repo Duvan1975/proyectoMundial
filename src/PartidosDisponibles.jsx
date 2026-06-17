@@ -136,6 +136,21 @@ export function PartidosDisponibles() {
 
     };
 
+    const colombiaStyle = {
+        fontWeight: 700,
+        textShadow: "1px 1px 3px rgba(0, 0, 0, 0.25)",
+        background: "linear-gradient(90deg, #FFD100 0%, #FFD100 33%, #0038A8 33%, #0038A8 66%, #CE1126 66%, #CE1126 100%)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+        display: "inline-block",
+        padding: "0 4px",
+    };
+
+    const renderTeamName = (equipo) =>
+        equipo === "COLOMBIA"
+            ? <span style={colombiaStyle}>{equipo}</span>
+            : equipo;
+
     const tienePronosticoValido = (valor) =>
         valor !== undefined && valor !== null && valor !== "";
 
@@ -152,9 +167,9 @@ export function PartidosDisponibles() {
                 >
                     <div className="card-body">
                         <h5>
-                            {partido.equipoLocal}
+                            {renderTeamName(partido.equipoLocal)}
                             {" vs "}
-                            {partido.equipoVisitante}
+                            {renderTeamName(partido.equipoVisitante)}
                         </h5>
                         <p>
                             {formatFechaPartido(

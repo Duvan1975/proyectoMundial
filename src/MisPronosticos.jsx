@@ -7,7 +7,6 @@ export function MisPronosticos() {
     const [pronosticosPartido, setPronosticosPartido] = useState([]);
     const [mostrarModal, setMostrarModal] = useState(false);
     const [partidoSeleccionado, setPartidoSeleccionado] = useState(null);
-    const [tituloPartido, setTituloPartido] = useState("");
 
     const [pagina, setPagina] = useState(0);
     const [totalPaginas, setTotalPaginas] = useState(0);
@@ -95,11 +94,6 @@ export function MisPronosticos() {
 
             setPronosticosPartido(items);
             setPartidoSeleccionado(partido);
-
-            setTituloPartido(
-                `${partido.equipoLocal} vs ${partido.equipoVisitante} (${partido.golesLocal ?? '-'} - ${partido.golesVisitante ?? '-'})`
-            );
-
             setMostrarModal(true);
 
         } catch (error) {
@@ -120,6 +114,21 @@ export function MisPronosticos() {
             return acc;
         }, { local: 0, empate: 0, visitante: 0 })
         : { local: 0, empate: 0, visitante: 0 };
+
+    const colombiaStyle = {
+        fontWeight: 700,
+        textShadow: "1px 1px 3px rgba(0, 0, 0, 0.25)",
+        background: "linear-gradient(90deg, #FFD100 0%, #FFD100 33%, #0038A8 33%, #0038A8 66%, #CE1126 66%, #CE1126 100%)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+        display: "inline-block",
+        padding: "0 4px",
+    };
+
+    const renderTeamName = (equipo) =>
+        equipo === "COLOMBIA"
+            ? <span style={colombiaStyle}>{equipo}</span>
+            : equipo;
 
     return (
         <>
@@ -163,13 +172,9 @@ export function MisPronosticos() {
                         <div className="card-body">
 
                             <h5>
-
-                                {pronostico.partido.equipoLocal}
-
+                                {renderTeamName(pronostico.partido.equipoLocal)}
                                 {" vs "}
-
-                                {pronostico.partido.equipoVisitante}
-
+                                {renderTeamName(pronostico.partido.equipoVisitante)}
                             </h5>
                             <p>
 
@@ -231,13 +236,18 @@ export function MisPronosticos() {
                             <div className="modal-header">
 
                                 <h5 className="modal-title">
-
-                                    {tituloPartido}
+                                    {renderTeamName(partidoSeleccionado?.equipoLocal ?? "")}
+                                    {" vs "}
+                                    {renderTeamName(partidoSeleccionado?.equipoVisitante ?? "")}
+                                    {" ("}
+                                    {partidoSeleccionado?.golesLocal ?? '-'}
+                                    {" - "}
+                                    {partidoSeleccionado?.golesVisitante ?? '-'}
+                                    {")"}
 
                                     <small className="text-muted ms-2">
                                         {pronosticosPartido.length} de {TOTAL_PARTICIPANTES} han pronosticado
                                     </small>
-
                                 </h5>
 
                                 <button
