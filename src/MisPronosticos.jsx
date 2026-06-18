@@ -170,7 +170,6 @@ export function MisPronosticos() {
                         
                         className="card mb-3"
                     >
-                        console.log(pronostico);
 
                         <div className="card-body">
 
