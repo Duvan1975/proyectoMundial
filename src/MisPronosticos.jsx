@@ -206,12 +206,6 @@ export function MisPronosticos() {
 
                             </p>
 
-                            {pronostico.partido.finalizado && (
-                                <p>
-                                    PARTIDO FINALIZADO
-                                </p>
-                            )}
-
                             {/* Campo de puntos removido por solicitud */}
                             <button
                                 className="btn btn-info mt-2"
