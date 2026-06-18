@@ -130,6 +130,7 @@ export function MisPronosticos() {
             ? <span style={colombiaStyle}>{equipo}</span>
             : equipo;
 
+
     return (
         <>
             <div className="container">
@@ -166,8 +167,10 @@ export function MisPronosticos() {
 
                     <div
                         key={pronostico.id}
+                        
                         className="card mb-3"
                     >
+                        console.log(pronostico);
 
                         <div className="card-body">
 
@@ -202,6 +205,12 @@ export function MisPronosticos() {
                                 {pronostico.golesVisitantePronosticado}
 
                             </p>
+
+                            {pronostico.partido.finalizado && (
+                                <p>
+                                    PARTIDO FINALIZADO
+                                </p>
+                            )}
 
                             {/* Campo de puntos removido por solicitud */}
                             <button
