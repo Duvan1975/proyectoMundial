@@ -77,6 +77,13 @@ export function MisPronosticos() {
             );
 
             const data = await response.json();
+            console.log(data);
+
+            console.log(
+                data.filter(
+                    p => p.partido?.finalizado === false
+                )
+            );
 
             // Normalizar a array por seguridad
             const items = Array.isArray(data)
@@ -101,6 +108,74 @@ export function MisPronosticos() {
             alert("Error cargando pronósticos");
         }
 
+    };
+
+    const calcularPuntos = (pronostico) => {
+
+        const realLocal =
+            pronostico.partido.golesLocal;
+
+        const realVisitante =
+            pronostico.partido.golesVisitante;
+
+        const pronLocal =
+            pronostico.golesLocalPronosticado;
+
+        const pronVisitante =
+            pronostico.golesVisitantePronosticado;
+
+        // Marcador exacto
+        if (
+            realLocal === pronLocal &&
+            realVisitante === pronVisitante
+        ) {
+            return 10;
+        }
+
+        // Empate exacto ya fue cubierto arriba
+        // Si ambos son empate pero distinto marcador
+        if (
+            realLocal === realVisitante &&
+            pronLocal === pronVisitante
+        ) {
+            return 5;
+        }
+
+        const ganadorReal =
+            realLocal > realVisitante
+                ? "LOCAL"
+                : realLocal < realVisitante
+                    ? "VISITANTE"
+                    : "EMPATE";
+
+        const ganadorPron =
+            pronLocal > pronVisitante
+                ? "LOCAL"
+                : pronLocal < pronVisitante
+                    ? "VISITANTE"
+                    : "EMPATE";
+
+        // Si no coincide el resultado
+        if (ganadorReal !== ganadorPron) {
+            return 0;
+        }
+
+        // Si es empate ya se devolvió 10 o 5 arriba
+        if (ganadorReal === "EMPATE") {
+            return 5;
+        }
+
+        const diferenciaReal =
+            Math.abs(realLocal - realVisitante);
+
+        const diferenciaPron =
+            Math.abs(pronLocal - pronVisitante);
+
+        if (diferenciaReal === diferenciaPron) {
+            return 7;
+        }
+
+        return 5;
     };
 
     const resumenPronosticos = Array.isArray(pronosticosPartido)
@@ -167,7 +242,7 @@ export function MisPronosticos() {
 
                     <div
                         key={pronostico.id}
-                        
+
                         className="card mb-3"
                     >
 
@@ -204,6 +279,16 @@ export function MisPronosticos() {
                                 {pronostico.golesVisitantePronosticado}
 
                             </p>
+
+                            {pronostico.partido.finalizado && (
+                                <p>
+                                    <strong>
+                                        Puntos obtenidos: {
+                                            calcularPuntos(pronostico)
+                                        }
+                                    </strong>
+                                </p>
+                            )}
 
                             {/* Campo de puntos removido por solicitud */}
                             <button
