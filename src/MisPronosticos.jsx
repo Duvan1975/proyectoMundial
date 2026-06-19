@@ -13,6 +13,8 @@ export function MisPronosticos() {
     const TOTAL_PARTICIPANTES = 22; // total de participantes en el pronóstico
     const PAGE_SIZE = 5;
 
+    const [totalPuntos, setTotalPuntos] = useState(0);
+
     const cargarPronosticos = async (paginaActual = 0) => {
 
         const usuarioId =
@@ -67,48 +69,6 @@ export function MisPronosticos() {
         cargarPronosticos();
 
     }, []);
-
-    const verPronosticos = async (partido) => {
-
-        try {
-
-            const response = await fetch(
-                `${API_URL}/pronosticos/partido/${partido.id}`
-            );
-
-            const data = await response.json();
-            console.log(data);
-
-            console.log(
-                data.filter(
-                    p => p.partido?.finalizado === false
-                )
-            );
-
-            // Normalizar a array por seguridad
-            const items = Array.isArray(data)
-                ? data
-                : Array.isArray(data?.content)
-                    ? data.content
-                    : [];
-
-            // Ordenar si es array
-            if (Array.isArray(items)) {
-                items.sort(
-                    (a, b) => b.usuario?.puntos - a.usuario?.puntos
-                );
-            }
-
-            setPronosticosPartido(items);
-            setPartidoSeleccionado(partido);
-            setMostrarModal(true);
-
-        } catch (error) {
-            console.error(error);
-            alert("Error cargando pronósticos");
-        }
-
-    };
 
     const calcularPuntos = (pronostico) => {
 
@@ -178,6 +138,85 @@ export function MisPronosticos() {
         return 5;
     };
 
+    const validarTotalPuntos = async () => {
+
+        const usuarioId =
+            localStorage.getItem("usuarioId");
+
+        const response = await fetch(
+            `${API_URL}/pronosticos/usuario/${usuarioId}?page=0&size=100`
+        );
+
+        const data = await response.json();
+
+        const todosLosPronosticos =
+            data.content || [];
+
+        const totalCalculado =
+            todosLosPronosticos.reduce(
+                (total, pronostico) =>
+                    total +
+                    (
+                        pronostico.partido.finalizado
+                            ? calcularPuntos(pronostico)
+                            : 0
+                    ),
+                0
+            );
+
+
+        setTotalPuntos(totalCalculado);
+
+    };
+
+    useEffect(() => {
+
+        cargarPronosticos();
+
+        validarTotalPuntos();
+
+        // eslint-disable-next-line
+    }, []);
+
+
+
+    const verPronosticos = async (partido) => {
+
+        try {
+
+            const response = await fetch(
+                `${API_URL}/pronosticos/partido/${partido.id}`
+            );
+
+            const data = await response.json();
+
+            // Normalizar a array por seguridad
+            const items = Array.isArray(data)
+                ? data
+                : Array.isArray(data?.content)
+                    ? data.content
+                    : [];
+
+            // Ordenar si es array
+            if (Array.isArray(items)) {
+                items.sort(
+                    (a, b) => b.usuario?.puntos - a.usuario?.puntos
+                );
+            }
+
+            setPronosticosPartido(items);
+            setPartidoSeleccionado(partido);
+            setMostrarModal(true);
+
+        } catch (error) {
+            console.error(error);
+            alert("Error cargando pronósticos");
+        }
+
+    };
+
+
+
     const resumenPronosticos = Array.isArray(pronosticosPartido)
         ? pronosticosPartido.reduce((acc, p) => {
             const l = Number(p.golesLocalPronosticado);
@@ -228,6 +267,8 @@ export function MisPronosticos() {
                         Página {pagina + 1} de {totalPaginas}
                     </span>
 
+
+
                     <button
                         className="btn btn-secondary"
                         disabled={pagina + 1 >= totalPaginas}
@@ -238,12 +279,20 @@ export function MisPronosticos() {
 
                 </div>
 
+                <div className="text-center mt-3">
+                    <h5>
+                        Total puntos acumulados: {totalPuntos}
+                    </h5>
+                </div>
+
                 {Array.isArray(pronosticos) ? pronosticos.map(pronostico => (
 
                     <div
                         key={pronostico.id}
-
-                        className="card mb-3"
+                        className={`card mb-3 ${pronostico.partido.finalizado
+                            ? "border-success"
+                            : ""
+                            }`}
                     >
 
                         <div className="card-body">
@@ -252,6 +301,12 @@ export function MisPronosticos() {
                                 {renderTeamName(pronostico.partido.equipoLocal)}
                                 {" vs "}
                                 {renderTeamName(pronostico.partido.equipoVisitante)}
+
+                                {pronostico.partido.finalizado && (
+                                    <span className="badge bg-success ms-2">
+                                        Finalizado
+                                    </span>
+                                )}
                             </h5>
                             <p>
 
