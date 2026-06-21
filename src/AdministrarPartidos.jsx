@@ -14,7 +14,7 @@ export function AdministrarPartidos() {
         try {
 
             const response = await fetch(
-                `${API_URL}/partidos/habilitados`
+                `${API_URL}/partidos/pendientes`
             );
 
             const data = await response.json();
@@ -22,7 +22,9 @@ export function AdministrarPartidos() {
             setPartidos(data);
 
         } catch (error) {
+
             console.error(error);
+
             alert("Error cargando partidos");
         }
     };
@@ -69,12 +71,10 @@ export function AdministrarPartidos() {
                     },
                     body: JSON.stringify({
                         id: partido.id,
-                        golesLocal:
-                            Number(partido.golesLocal),
-                        golesVisitante:
-                            Number(partido.golesVisitante),
-                        finalizado: true,
-                        habilitadoPronostico: false
+                        golesLocal: Number(partido.golesLocal),
+                        golesVisitante: Number(partido.golesVisitante),
+                        finalizado: partido.finalizado,
+                        habilitadoPronostico: partido.habilitadoPronostico
                     })
                 }
             );

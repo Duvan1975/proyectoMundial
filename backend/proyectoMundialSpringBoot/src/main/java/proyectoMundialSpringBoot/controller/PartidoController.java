@@ -86,4 +86,11 @@ public class PartidoController {
                 partidoService.listarDisponiblesEdicion(
                         usuarioId));
     }
+
+    @GetMapping("/pendientes")
+    public ResponseEntity<List<Partido>> listarPendientes() {
+        return ResponseEntity.ok(
+                partidoService.listarPartidosPendientes()
+        );
+    }
 }

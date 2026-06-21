@@ -156,4 +156,8 @@ public class PartidoService {
                 .toList();
     }
 
+    public List<Partido> listarPartidosPendientes() {
+        return partidoRepository.findByFinalizadoFalse();
+    }
+
 }

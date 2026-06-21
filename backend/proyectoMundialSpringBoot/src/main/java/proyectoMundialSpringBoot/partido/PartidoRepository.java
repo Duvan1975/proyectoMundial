@@ -21,4 +21,6 @@ public interface PartidoRepository extends JpaRepository<Partido, Long> {
     """)
     List<Partido> buscarPartidosDisponibles(Long usuarioId);
 
+    List<Partido> findByFinalizadoFalse();
+
 }
