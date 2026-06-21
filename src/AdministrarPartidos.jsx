@@ -85,13 +85,6 @@ export function AdministrarPartidos() {
                     "Resultado guardado correctamente"
                 );
 
-                // Guardar timestamp local de la última actualización (visible a admin)
-                try {
-                    localStorage.setItem("ultimaActualizacion", new Date().toISOString());
-                } catch (e) {
-                    // ignore storage errors
-                }
-
                 cargarPartidos();
 
             } else {

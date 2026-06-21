@@ -13,9 +13,9 @@ export function Menu() {
 
     const usuarioActivo = localStorage.getItem("usuarioId");
     const nombreUsuario = localStorage.getItem("nombreUsuario");
-    const [ultimaActualizacion, setUltimaActualizacion] = useState(
+    /*const [ultimaActualizacion, setUltimaActualizacion] = useState(
         localStorage.getItem("ultimaActualizacion")
-    );
+    );*/
 
     const [vista, setVista] = useState("menu");
 
@@ -25,7 +25,7 @@ export function Menu() {
             === "true"
         );
 
-    const inyectarUltimaActualizacion = () => {
+    /*const inyectarUltimaActualizacion = () => {
         try {
             const ahora = new Date();
             const iso = ahora.toISOString();
@@ -34,7 +34,7 @@ export function Menu() {
         } catch (e) {
             console.error("Error guardando fecha:", e);
         }
-    };
+    };*/
 
     if (!usuarioActivo) {
         return <SeleccionarUsuario />;
@@ -51,9 +51,9 @@ export function Menu() {
                         <p className="mb-0 text-muted">
                             Bienvenido, <strong>{nombreUsuario}</strong>
                         </p>
-                        <p className="mb-0 text-muted small">
+                        {/*<p className="mb-0 text-muted small">
                             Última actualización: {ultimaActualizacion ? new Date(ultimaActualizacion).toLocaleString() : "No registrada"}
-                        </p>
+                        </p>*/}
                     </div>
                     <div className="d-flex flex-wrap gap-2">
                         <button
@@ -119,12 +119,12 @@ export function Menu() {
                             >
                                 Registrar Usuario
                             </button>
-                            <button
+                            {/*<button
                                 className="btn btn-outline-info btn-sm"
                                 onClick={inyectarUltimaActualizacion}
                             >
                                 Registrar última actualización
-                            </button>
+                            </button>*/}
                             <button
                                 className="btn btn-secondary btn-sm flex-fill flex-md-grow-0"
                                 onClick={() => setVista("tabla")}
