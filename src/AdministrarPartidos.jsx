@@ -22,13 +22,9 @@ export function AdministrarPartidos() {
             setPartidos(data);
 
         } catch (error) {
-
             console.error(error);
-
             alert("Error cargando partidos");
-
         }
-
     };
 
     const actualizarCampo = (
@@ -47,7 +43,6 @@ export function AdministrarPartidos() {
                     : partido
             )
         );
-
     };
 
     const guardarResultado = async (
@@ -98,29 +93,22 @@ export function AdministrarPartidos() {
                     await response.text();
 
                 alert(error);
-
             }
-
         } catch (error) {
-
             console.error(error);
 
             alert(
                 "Error actualizando partido"
             );
-
         }
-
     };
 
     return (
 
         <div className="container">
-
             <h2 className="mb-4">
                 Administración de Partidos
             </h2>
-
             {partidos.length === 0 ? (
                 <div className="alert alert-info">
                     No hay partidos habilitados.
@@ -132,7 +120,6 @@ export function AdministrarPartidos() {
                         key={partido.id}
                         className="card mb-3"
                     >
-
                         <div className="card-body">
 
                             <h5>
@@ -168,7 +155,6 @@ export function AdministrarPartidos() {
                                             )
                                         }
                                     />
-
                                 </div>
 
                                 <div className="col-md-5">
@@ -192,7 +178,6 @@ export function AdministrarPartidos() {
                                             )
                                         }
                                     />
-
                                 </div>
 
                                 <div className="col-md-2 d-flex align-items-end">
@@ -211,11 +196,8 @@ export function AdministrarPartidos() {
                                 </div>
 
                                 <div className="row mb-3">
-
                                     <div className="col-md-6">
-
                                         <div className="form-check">
-
                                             <input
                                                 type="checkbox"
                                                 className="form-check-input"
@@ -234,15 +216,11 @@ export function AdministrarPartidos() {
                                             <label className="form-check-label">
                                                 Finalizado
                                             </label>
-
                                         </div>
-
                                     </div>
 
                                     <div className="col-md-6">
-
                                         <div className="form-check">
-
                                             <input
                                                 type="checkbox"
                                                 className="form-check-input"
@@ -261,24 +239,14 @@ export function AdministrarPartidos() {
                                             <label className="form-check-label">
                                                 Habilitado Pronóstico
                                             </label>
-
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 ))
             )}
-
         </div>
-
     );
-
 }

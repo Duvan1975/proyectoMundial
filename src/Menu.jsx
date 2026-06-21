@@ -40,32 +40,32 @@ export function Menu() {
                     </div>
                     <div className="d-flex flex-wrap gap-2">
                         <button
-                            className="btn btn-dark btn-sm"
+                            className="btn btn-dark"
                             onClick={() => setVista("admin")}
                         >
                             Administración
                         </button>
                         <button
-                            className="btn btn-info btn-sm"
+                            className="btn btn-info"
                             onClick={() => setVista("menu")}
                         >
                             Instrucciones
                         </button>
 
                         <button
-                            className="btn btn-warning btn-sm"
+                            className="btn btn-warning"
                             onClick={() => setVista("pronosticos")}
                         >
                             Pronosticar
                         </button>
                         <button
-                            className="btn btn-dark btn-sm"
+                            className="btn btn-dark"
                             onClick={() => setVista("misPronosticos")}
                         >
                             Mis Pronósticos
                         </button>
                         <button
-                            className="btn btn-warning btn-sm"
+                            className="btn btn-warning"
                             onClick={() => setVista("ranking")}
                         >
                             Ranking
@@ -79,7 +79,7 @@ export function Menu() {
                             Cambiar PIN
                         </button>
                         <button
-                            className="btn btn-danger btn-sm"
+                            className="btn btn-danger"
                             onClick={() => {
                                 localStorage.removeItem("usuarioId");
                                 localStorage.removeItem("nombreUsuario");
