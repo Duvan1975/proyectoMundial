@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "./config";
+import "./style.css";
 
 export function Ranking() {
 
@@ -22,43 +23,44 @@ export function Ranking() {
     return (
 
         <div className="container">
-
             <h2>🏆 Ranking General</h2>
 
-            <table className="table">
+            <p className="text-muted">
+                Participantes: 22
+            </p>
 
+            <table className="table table-striped">
                 <thead>
-
                     <tr>
-                        <th>Posición</th>
+                        <th className="text-center">Posición</th>
                         <th>Nombre</th>
                         <th>Puntos</th>
                     </tr>
-
                 </thead>
-
                 <tbody>
-
                     {usuarios.map((usuario, index) => (
 
-                        <tr key={usuario.id}>
-
-                            <td>{index + 1}</td>
-
+                        <tr
+                            key={usuario.id}
+                            className={
+                                usuario.puntos === usuarios[0]?.puntos
+                                    ? "lider-ranking"
+                                    : ""
+                            }
+                        >
+                            <td className="text-center">
+                                {
+                                    usuario.puntos === usuarios[0]?.puntos
+                                        ? "🥇"
+                                        : index + 1
+                                }
+                            </td>
                             <td>{usuario.nombre}</td>
-
                             <td>{usuario.puntos}</td>
-
                         </tr>
-
                     ))}
-
                 </tbody>
-
             </table>
-
         </div>
-
     );
-
 }

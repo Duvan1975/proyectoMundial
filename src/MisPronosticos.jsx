@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "./config";
+import "./style.css";
 
 export function MisPronosticos() {
 
@@ -440,16 +441,12 @@ export function MisPronosticos() {
                                                 <tr key={p.id}>
 
                                                     <td>
-
-                                                        {index === 0 && "🥇"}
-
-                                                        {index === 1 && "🥈"}
-
-                                                        {index === 2 && "🥉"}
-
-                                                        {index > 2 &&
-                                                            index + 1}
-
+                                                        {
+                                                            p.usuario?.puntos ===
+                                                                pronosticosPartido[0]?.usuario?.puntos
+                                                                ? "🥇"
+                                                                : index + 1
+                                                        }
                                                     </td>
 
                                                     <td>
