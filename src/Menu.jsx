@@ -13,6 +13,9 @@ export function Menu() {
 
     const usuarioActivo = localStorage.getItem("usuarioId");
     const nombreUsuario = localStorage.getItem("nombreUsuario");
+    const [ultimaActualizacion, setUltimaActualizacion] = useState(
+        localStorage.getItem("ultimaActualizacion")
+    );
 
     const [vista, setVista] = useState("menu");
 
@@ -21,6 +24,17 @@ export function Menu() {
             localStorage.getItem("admin")
             === "true"
         );
+
+    const inyectarUltimaActualizacion = () => {
+        try {
+            const ahora = new Date();
+            const iso = ahora.toISOString();
+            localStorage.setItem("ultimaActualizacion", iso);
+            setUltimaActualizacion(iso);
+        } catch (e) {
+            console.error("Error guardando fecha:", e);
+        }
+    };
 
     if (!usuarioActivo) {
         return <SeleccionarUsuario />;
@@ -36,6 +50,9 @@ export function Menu() {
                         <h1 className="h3 mb-1">Panel de Usuario</h1>
                         <p className="mb-0 text-muted">
                             Bienvenido, <strong>{nombreUsuario}</strong>
+                        </p>
+                        <p className="mb-0 text-muted small">
+                            Última actualización: {ultimaActualizacion ? new Date(ultimaActualizacion).toLocaleString() : "No registrada"}
                         </p>
                     </div>
                     <div className="d-flex flex-wrap gap-2">
@@ -101,6 +118,12 @@ export function Menu() {
                                 onClick={() => setVista("formulario")}
                             >
                                 Registrar Usuario
+                            </button>
+                            <button
+                                className="btn btn-outline-info btn-sm"
+                                onClick={inyectarUltimaActualizacion}
+                            >
+                                Registrar última actualización
                             </button>
                             <button
                                 className="btn btn-secondary btn-sm flex-fill flex-md-grow-0"
