@@ -48,6 +48,7 @@ export function TablaUsuarios() {
                 <thead>
                     <tr>
                         <th>Nombre</th>
+                        <th>Pin</th>
                         <th>Puntos</th>
                         <th>Acciones</th>
                     </tr>
@@ -56,6 +57,7 @@ export function TablaUsuarios() {
                     {usuarios.map((usu, index) => (
                         <tr key={index}>
                             <td>{usu.nombre}</td>
+                            <td>{usu.pin}</td>
                             <td>{usu.puntos}</td>
                             <td>
                                 <button className="btn btn-sm btn-primary"

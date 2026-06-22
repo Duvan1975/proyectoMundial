@@ -174,4 +174,28 @@ public class PronosticoService {
 
         return pronostico;
     }
+
+    public void eliminarPronostico(Long id) {
+
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("Pronostico no encontrado con el id: " + id);
+        }
+        repository.deleteById(id);
+    }
+
+    public Page<DatosRespuestaPronosticoAdmin> listarPronosticos(
+            Pageable pageable) {
+
+        return repository
+                .findAllByOrderByIdDesc(pageable)
+                .map(pronostico ->
+                        new DatosRespuestaPronosticoAdmin(
+                                pronostico.getId(),
+                                pronostico.getUsuario().getNombre(),
+                                pronostico.getPartido().getEquipoLocal(),
+                                pronostico.getPartido().getEquipoVisitante(),
+                                pronostico.getGolesLocalPronosticado(),
+                                pronostico.getGolesVisitantePronosticado()
+                        ));
+    }
 }

@@ -6,10 +6,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import proyectoMundialSpringBoot.pronostico.DatosActualizarPronostico;
-import proyectoMundialSpringBoot.pronostico.DatosRegistroPronostico;
-import proyectoMundialSpringBoot.pronostico.Pronostico;
-import proyectoMundialSpringBoot.pronostico.PronosticoService;
+import proyectoMundialSpringBoot.pronostico.*;
 
 import java.util.List;
 
@@ -74,5 +71,22 @@ public class PronosticoController {
 
         return ResponseEntity.ok(
                 pronosticoService.actualizar(datos));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminarPronostico(@PathVariable Long id) {
+        pronosticoService.eliminarPronostico(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/admin")
+    public ResponseEntity<Page<DatosRespuestaPronosticoAdmin>> listarPronosticos(
+            @PageableDefault(size = 20)
+            Pageable pageable) {
+
+        return ResponseEntity.ok(
+                pronosticoService.listarPronosticos(pageable)
+        );
     }
 }

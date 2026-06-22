@@ -8,6 +8,8 @@ import { Ranking } from "./Ranking";
 import { PinAdministrador } from "./PinAdministrador";
 import { CambiarPin } from "./CambiarPin";
 import { AdministrarPartidos } from "./AdministrarPartidos";
+import { RegistrarPartido } from "./RegistrarPartido";
+import { PronosticosAdmin } from "./PronosticosAdmin";
 
 export function Menu() {
 
@@ -133,6 +135,14 @@ export function Menu() {
                             </button>
                             <button
                                 className="btn btn-success btn-sm"
+                                onClick={() =>
+                                    setVista("registrarPartido")
+                                }
+                            >
+                                Registrar Partido
+                            </button>
+                            <button
+                                className="btn btn-success btn-sm"
                                 onClick={() => setVista("seleccionar")}
                             >
                                 Seleccionar Usuario
@@ -144,6 +154,14 @@ export function Menu() {
                                 }
                             >
                                 Administrar Partidos
+                            </button>
+                            <button
+                                className="btn btn-dark btn-sm"
+                                onClick={() =>
+                                    setVista("pronosticosAdmin")
+                                }
+                            >
+                                Ver Pronósticos
                             </button>
                             <button
                                 className="btn btn-danger btn-sm flex-fill flex-md-grow-0"
@@ -260,6 +278,12 @@ export function Menu() {
                     />
                 )}
                 {vista === "cambiarPin" && <CambiarPin />}
+                {vista === "registrarPartido" &&
+                    <RegistrarPartido />
+                }
+                {vista === "pronosticosAdmin" &&
+                    <PronosticosAdmin />
+                }
             </main>
 
         </div>
