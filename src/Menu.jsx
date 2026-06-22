@@ -47,66 +47,83 @@ export function Menu() {
         <div className="container py-4">
 
             <header className="mb-4">
-                <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
-                    <div>
-                        <h1 className="h3 mb-1">Panel de Usuario</h1>
-                        <p className="mb-0 text-muted">
-                            Bienvenido, <strong>{nombreUsuario}</strong>
-                        </p>
-                        {/*<p className="mb-0 text-muted small">
-                            Última actualización: {ultimaActualizacion ? new Date(ultimaActualizacion).toLocaleString() : "No registrada"}
-                        </p>*/}
-                    </div>
-                    <div className="d-flex flex-wrap gap-2">
-                        <button
-                            className="btn btn-dark"
-                            onClick={() => setVista("admin")}
-                        >
-                            Administración
-                        </button>
-                        <button
-                            className="btn btn-info"
-                            onClick={() => setVista("menu")}
-                        >
-                            Instrucciones
-                        </button>
+                <div className="card shadow-sm border-0" style={{ borderRadius: "16px", background: "linear-gradient(135deg, #1a1a2e, #16213e)" }}>
+                    <div className="card-body p-4">
+                        <div className="d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center gap-3">
 
-                        <button
-                            className="btn btn-warning"
-                            onClick={() => setVista("pronosticos")}
-                        >
-                            Pronosticar
-                        </button>
-                        <button
-                            className="btn btn-dark"
-                            onClick={() => setVista("misPronosticos")}
-                        >
-                            Mis Pronósticos
-                        </button>
-                        <button
-                            className="btn btn-warning"
-                            onClick={() => setVista("ranking")}
-                        >
-                            Ranking
-                        </button>
-                        <button
-                            className="btn btn-warning me-2"
-                            onClick={() =>
-                                setVista("cambiarPin")
-                            }
-                        >
-                            Cambiar PIN
-                        </button>
-                        <button
-                            className="btn btn-danger"
-                            onClick={() => {
-                                localStorage.removeItem("usuarioId");
-                                localStorage.removeItem("nombreUsuario");
-                                window.location.reload();
-                            }}
-                        >
-                            Salir
-                        </button>
+                            {/* Info usuario */}
+                            <div className="text-white">
+                                <h1 className="h3 mb-1 fw-bold">
+                                    <span className="me-2">👋</span> Panel de Usuario
+                                </h1>
+                                <p className="mb-0 opacity-75">
+                                    Bienvenido, <strong className="text-warning">{nombreUsuario}</strong>
+                                </p>
+                            </div>
+
+                            {/* Botones */}
+                            <div className="d-flex flex-wrap gap-2 w-100 w-lg-auto">
+                                <button
+                                    className="btn btn-light btn-sm flex-fill flex-lg-grow-0 px-3"
+                                    onClick={() => setVista("admin")}
+                                    style={{ fontWeight: "600", borderRadius: "10px" }}
+                                >
+                                    ⚙️ Admin
+                                </button>
+
+                                <button
+                                    className="btn btn-info btn-sm flex-fill flex-lg-grow-0 px-3 text-white"
+                                    onClick={() => setVista("menu")}
+                                    style={{ fontWeight: "600", borderRadius: "10px", background: "#17a2b8", border: "none" }}
+                                >
+                                    📖 Instrucciones
+                                </button>
+
+                                <button
+                                    className="btn btn-warning btn-sm flex-fill flex-lg-grow-0 px-3"
+                                    onClick={() => setVista("pronosticos")}
+                                    style={{ fontWeight: "700", borderRadius: "10px" }}
+                                >
+                                    ✏️ Pronosticar
+                                </button>
+
+                                <button
+                                    className="btn btn-outline-light btn-sm flex-fill flex-lg-grow-0 px-3"
+                                    onClick={() => setVista("misPronosticos")}
+                                    style={{ fontWeight: "600", borderRadius: "10px" }}
+                                >
+                                    📋 Mis Pronósticos
+                                </button>
+
+                                <button
+                                    className="btn btn-warning btn-sm flex-fill flex-lg-grow-0 px-3"
+                                    onClick={() => setVista("ranking")}
+                                    style={{ fontWeight: "700", borderRadius: "10px" }}
+                                >
+                                    🏆 Ranking
+                                </button>
+
+                                <button
+                                    className="btn btn-outline-light btn-sm flex-fill flex-lg-grow-0 px-3"
+                                    onClick={() => setVista("cambiarPin")}
+                                    style={{ fontWeight: "600", borderRadius: "10px" }}
+                                >
+                                    🔑 Cambiar PIN
+                                </button>
+
+                                <button
+                                    className="btn btn-danger btn-sm flex-fill flex-lg-grow-0 px-3"
+                                    onClick={() => {
+                                        localStorage.removeItem("usuarioId");
+                                        localStorage.removeItem("nombreUsuario");
+                                        window.location.reload();
+                                    }}
+                                    style={{ fontWeight: "700", borderRadius: "10px" }}
+                                >
+                                    🚪 Salir
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </header>
