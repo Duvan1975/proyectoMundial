@@ -61,64 +61,64 @@ export function Menu() {
                                 </p>
                             </div>
 
-                            {/* Botones */}
+                            {/* Botones más grandes */}
                             <div className="d-flex flex-wrap gap-2 w-100 w-lg-auto">
                                 <button
-                                    className="btn btn-light btn-sm flex-fill flex-lg-grow-0 px-3"
+                                    className="btn btn-light px-4 py-2 flex-fill flex-lg-grow-0"
                                     onClick={() => setVista("admin")}
-                                    style={{ fontWeight: "600", borderRadius: "10px" }}
+                                    style={{ fontWeight: "600", borderRadius: "10px", fontSize: "0.95rem" }}
                                 >
                                     ⚙️ Admin
                                 </button>
 
                                 <button
-                                    className="btn btn-info btn-sm flex-fill flex-lg-grow-0 px-3 text-white"
+                                    className="btn btn-info px-4 py-2 flex-fill flex-lg-grow-0 text-white"
                                     onClick={() => setVista("menu")}
-                                    style={{ fontWeight: "600", borderRadius: "10px", background: "#17a2b8", border: "none" }}
+                                    style={{ fontWeight: "600", borderRadius: "10px", background: "#17a2b8", border: "none", fontSize: "0.95rem" }}
                                 >
                                     📖 Instrucciones
                                 </button>
 
                                 <button
-                                    className="btn btn-warning btn-sm flex-fill flex-lg-grow-0 px-3"
+                                    className="btn btn-warning px-4 py-2 flex-fill flex-lg-grow-0"
                                     onClick={() => setVista("pronosticos")}
-                                    style={{ fontWeight: "700", borderRadius: "10px" }}
+                                    style={{ fontWeight: "700", borderRadius: "10px", fontSize: "0.95rem" }}
                                 >
                                     ✏️ Pronosticar
                                 </button>
 
                                 <button
-                                    className="btn btn-outline-light btn-sm flex-fill flex-lg-grow-0 px-3"
+                                    className="btn btn-outline-light px-4 py-2 flex-fill flex-lg-grow-0"
                                     onClick={() => setVista("misPronosticos")}
-                                    style={{ fontWeight: "600", borderRadius: "10px" }}
+                                    style={{ fontWeight: "600", borderRadius: "10px", fontSize: "0.95rem" }}
                                 >
                                     📋 Mis Pronósticos
                                 </button>
 
                                 <button
-                                    className="btn btn-warning btn-sm flex-fill flex-lg-grow-0 px-3"
+                                    className="btn btn-warning px-4 py-2 flex-fill flex-lg-grow-0"
                                     onClick={() => setVista("ranking")}
-                                    style={{ fontWeight: "700", borderRadius: "10px" }}
+                                    style={{ fontWeight: "700", borderRadius: "10px", fontSize: "0.95rem" }}
                                 >
                                     🏆 Ranking
                                 </button>
 
                                 <button
-                                    className="btn btn-outline-light btn-sm flex-fill flex-lg-grow-0 px-3"
+                                    className="btn btn-outline-light px-4 py-2 flex-fill flex-lg-grow-0"
                                     onClick={() => setVista("cambiarPin")}
-                                    style={{ fontWeight: "600", borderRadius: "10px" }}
+                                    style={{ fontWeight: "600", borderRadius: "10px", fontSize: "0.95rem" }}
                                 >
                                     🔑 Cambiar PIN
                                 </button>
 
                                 <button
-                                    className="btn btn-danger btn-sm flex-fill flex-lg-grow-0 px-3"
+                                    className="btn btn-danger px-4 py-2 flex-fill flex-lg-grow-0"
                                     onClick={() => {
                                         localStorage.removeItem("usuarioId");
                                         localStorage.removeItem("nombreUsuario");
                                         window.location.reload();
                                     }}
-                                    style={{ fontWeight: "700", borderRadius: "10px" }}
+                                    style={{ fontWeight: "700", borderRadius: "10px", fontSize: "0.95rem" }}
                                 >
                                     🚪 Salir
                                 </button>
