@@ -13,11 +13,13 @@ public class Usuario {
     private Integer puntos;
 
     private String pin;
+    private Integer posicionAnterior;
 
     public Usuario(DatosRegistroUsuario datos) {
         this.nombre = datos.nombre();
         this.puntos = 0;
         this.pin = datos.pin();
+        this.posicionAnterior = null;
     }
 
     public Usuario() {
@@ -54,6 +56,14 @@ public class Usuario {
 
     public void setPin(String pin) {
         this.pin = pin;
+    }
+
+    public Integer getPosicionAnterior() {
+        return posicionAnterior;
+    }
+
+    public void setPosicionAnterior(Integer posicionAnterior) {
+        this.posicionAnterior = posicionAnterior;
     }
 
     public void actualizarDatos(DatosActualizarUsuarios datos) {

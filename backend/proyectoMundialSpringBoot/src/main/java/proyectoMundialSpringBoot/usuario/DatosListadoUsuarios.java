@@ -4,14 +4,16 @@ public record DatosListadoUsuarios(
         Long id,
         String nombre,
         String pin,
-        Integer puntos
+        Integer puntos,
+        Integer posicionAnterior
 ) {
     public DatosListadoUsuarios(Usuario usuario) {
         this(
                 usuario.getId(),
                 usuario.getNombre(),
                 usuario.getPin(),
-                usuario.getPuntos()
+                usuario.getPuntos(),
+                usuario.getPosicionAnterior()
         );
     }
 }

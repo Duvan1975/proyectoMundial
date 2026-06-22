@@ -74,4 +74,12 @@ public class UsuariosController {
 
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/congelar-ranking")
+    public ResponseEntity<?> congelarRanking() {
+
+        usuarioService.congelarRanking();
+
+        return ResponseEntity.ok().build();
+    }
 }

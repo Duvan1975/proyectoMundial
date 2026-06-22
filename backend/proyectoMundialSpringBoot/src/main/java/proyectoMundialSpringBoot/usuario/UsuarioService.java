@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
+
 @Service
 public class UsuarioService {
 
@@ -29,7 +31,8 @@ public class UsuarioService {
                 usuario.getId(),
                 usuario.getNombre(),
                 usuario.getPuntos(),
-                usuario.getPin()
+                usuario.getPin(),
+                usuario.getPosicionAnterior()
         );
         return ResponseEntity.created(uri).body(datosRespuestaUsuario);
     }
@@ -52,7 +55,8 @@ public class UsuarioService {
                 usuario.getId(),
                 usuario.getNombre(),
                 usuario.getPuntos(),
-                usuario.getPin()
+                usuario.getPin(),
+                usuario.getPosicionAnterior()
         ));
 
     }
@@ -99,5 +103,19 @@ public class UsuarioService {
 
         usuario.setPin(datos.nuevoPin());
 
+    }
+
+    @Transactional
+    public void congelarRanking() {
+
+        List<Usuario> usuarios =
+                usuarioRepository
+                        .findAllByOrderByPuntosDesc();
+
+        for (int i = 0; i < usuarios.size(); i++) {
+
+            usuarios.get(i)
+                    .setPosicionAnterior(i + 1);
+        }
     }
 }

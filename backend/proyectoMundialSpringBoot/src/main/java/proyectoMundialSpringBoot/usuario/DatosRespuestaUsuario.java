@@ -4,6 +4,7 @@ public record DatosRespuestaUsuario(
         Long id,
         String nombre,
         Integer puntos,
-        String pin
+        String pin,
+        Integer posicionAnterior
 ) {
 }

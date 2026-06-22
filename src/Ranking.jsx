@@ -35,30 +35,63 @@ export function Ranking() {
                         <th className="text-center">Posición</th>
                         <th>Nombre</th>
                         <th>Puntos</th>
+                        <th className="text-center">Movimiento</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {usuarios.map((usuario, index) => (
+                    {usuarios.map((usuario, index) => {
 
-                        <tr
-                            key={usuario.id}
-                            className={
-                                usuario.puntos === usuarios[0]?.puntos
-                                    ? "lider-ranking"
-                                    : ""
-                            }
-                        >
-                            <td className="text-center">
-                                {
+                        const posicionActual = index + 1;
+
+                        const diferencia = usuario.posicionAnterior
+                            ? usuario.posicionAnterior - posicionActual
+                            : 0;
+
+                        return (
+                            <tr
+                                key={usuario.id}
+                                className={
                                     usuario.puntos === usuarios[0]?.puntos
-                                        ? "🥇"
-                                        : index + 1
+                                        ? "lider-ranking"
+                                        : ""
                                 }
-                            </td>
-                            <td>{usuario.nombre}</td>
-                            <td>{usuario.puntos}</td>
-                        </tr>
-                    ))}
+                            >
+                                <td className="text-center">
+                                    {
+                                        usuario.puntos === usuarios[0]?.puntos
+                                            ? "🥇"
+                                            : posicionActual
+                                    }
+                                </td>
+
+                                <td>{usuario.nombre}</td>
+
+                                <td>{usuario.puntos}</td>
+
+                                <td className="text-center fw-bold">
+
+                                    {diferencia > 0 && (
+                                        <span className="text-success fs-5">
+                                            ⬆ {diferencia}
+                                        </span>
+                                    )}
+
+                                    {diferencia < 0 && (
+                                        <span className="text-danger fs-5">
+                                            ⬇ {Math.abs(diferencia)}
+                                        </span>
+                                    )}
+
+                                    {diferencia === 0 && (
+                                        <span className="text-secondary fs-5">
+                                            ➖
+                                        </span>
+                                    )}
+
+                                </td>
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </table>
         </div>
