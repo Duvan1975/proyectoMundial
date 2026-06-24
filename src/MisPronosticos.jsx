@@ -12,7 +12,7 @@ export function MisPronosticos() {
     const [pagina, setPagina] = useState(0);
     const [totalPaginas, setTotalPaginas] = useState(0);
     const TOTAL_PARTICIPANTES = 22; // total de participantes en el pronóstico
-    const PAGE_SIZE = 5;
+    const PAGE_SIZE = 6;
 
     const [totalPuntos, setTotalPuntos] = useState(0);
 
