@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Swal from "sweetalert2";
 import { FormularioUsuarios } from "./FormularioUsuario";
 import { TablaUsuarios } from "./TablaUsuarios";
 import { SeleccionarUsuario } from "./SeleccionarUsuario";
@@ -41,6 +42,26 @@ export function Menu() {
     if (!usuarioActivo) {
         return <SeleccionarUsuario />;
     }
+
+    const confirmarSalida = () => {
+        Swal.fire({
+            title: "¿Cerrar sesión?",
+            text: "Tendrás que volver a ingresar con tu PIN.",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#dc3545",
+            cancelButtonColor: "#6c757d",
+            confirmButtonText: "Sí, salir",
+            cancelButtonText: "Cancelar"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem("usuarioId");
+                localStorage.removeItem("nombreUsuario");
+
+                window.location.reload();
+            }
+        });
+    };
 
     return (
 
@@ -113,12 +134,12 @@ export function Menu() {
 
                                 <button
                                     className="btn btn-danger px-4 py-2 flex-fill flex-lg-grow-0"
-                                    onClick={() => {
-                                        localStorage.removeItem("usuarioId");
-                                        localStorage.removeItem("nombreUsuario");
-                                        window.location.reload();
+                                    onClick={confirmarSalida}
+                                    style={{
+                                        fontWeight: "700",
+                                        borderRadius: "10px",
+                                        fontSize: "0.95rem"
                                     }}
-                                    style={{ fontWeight: "700", borderRadius: "10px", fontSize: "0.95rem" }}
                                 >
                                     🚪 Salir
                                 </button>
@@ -218,22 +239,6 @@ export function Menu() {
 
                             <hr />
 
-                            <h5>📌 Reglas importantes</h5>
-                            <ul>
-                                <li>Los partidos pronosticados desaparecen de la lista una vez guardados.</li>
-
-                                <li>Los pronósticos solo se pueden hacer antes de que inicie cada partido.</li>
-                                <li>Una vez el partido haya comenzado, ya no será posible realizar pronósticos sobre ese juego.</li>
-
-                                <li>Los resultados de los partidos no son automáticos y serán cargados manualmente.</li>
-                                <li>La puntuación y el ranking se actualizan manualmente después de cada jornada.</li>
-
-                                <li>La pestaña de Administración no está disponible para usuarios.</li>
-                                <li>El sistema es solo para uso recreativo entre participantes.</li>
-                            </ul>
-
-                            <hr />
-
                             <h5>🎯 Cómo funciona la puntuación</h5>
                             <p><strong>Ejemplo 1:</strong> Marcador real: Colombia 2 - Brasil 1</p>
                             <ul>
@@ -258,14 +263,18 @@ export function Menu() {
                                 <li><strong>Mis Pronósticos:</strong> Revisa tus apuestas realizadas.</li>
                                 <li><strong>Ranking:</strong> Consulta la tabla de posiciones general.</li>
                             </ul>
-
                             <hr />
 
                             <h5>📌 Reglas importantes</h5>
                             <ul>
                                 <li>Los partidos pronosticados desaparecen de la lista una vez guardados.</li>
+
                                 <li>Los pronósticos solo se pueden hacer antes de que inicie cada partido.</li>
                                 <li>Una vez el partido haya comenzado, ya no será posible realizar pronósticos sobre ese juego.</li>
+
+                                <li>Los resultados de los partidos no son automáticos y serán cargados manualmente.</li>
+                                <li>La puntuación y el ranking se actualizan manualmente después de cada jornada.</li>
+
                                 <li>La pestaña de Administración no está disponible para usuarios.</li>
                                 <li>El sistema es solo para uso recreativo entre participantes.</li>
                             </ul>
