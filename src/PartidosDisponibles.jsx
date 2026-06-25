@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "./config";
+import Swal from "sweetalert2";
 
 const formatFechaPartido = (fechaPartido) => {
     if (!fechaPartido) return "";
@@ -58,7 +59,7 @@ export function PartidosDisponibles() {
 
     const guardarPronostico = async (partido) => {
 
-        console.log(partido);
+        //console.log(partido);
         try {
 
             const metodo =
@@ -92,26 +93,37 @@ export function PartidosDisponibles() {
 
             if (response.ok) {
 
-                alert(
-                    "Pronóstico guardado correctamente"
-                );
+                await Swal.fire({
+                    icon: "success",
+                    title: partido.yaPronosticado
+                        ? "Pronóstico actualizado"
+                        : "Pronóstico guardado",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
 
             } else {
 
                 const error =
                     await response.text();
 
-                alert(error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: error
+                });
 
             }
 
         } catch (error) {
 
-            console.error(error);
+            //console.error(error);
 
-            alert(
-                "Error guardando pronóstico"
-            );
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Error guardando pronóstico"
+            });
 
         }
 
@@ -133,6 +145,28 @@ export function PartidosDisponibles() {
                     : partido
             )
         );
+
+    };
+
+    const confirmarGuardarPronostico = (partido) => {
+
+        Swal.fire({
+            title: partido.yaPronosticado
+                ? "¿Actualizar pronóstico?"
+                : "¿Guardar pronóstico?",
+            text: `${partido.pronosticoLocal} - ${partido.pronosticoVisitante}`,
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Confirmar",
+            cancelButtonText: "Cancelar",
+            confirmButtonColor: "#198754"
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                guardarPronostico(partido);
+            }
+
+        });
 
     };
 
@@ -229,7 +263,7 @@ export function PartidosDisponibles() {
                                 )
                             }
                             onClick={() =>
-                                guardarPronostico(
+                                confirmarGuardarPronostico(
                                     partido
                                 )
                             }

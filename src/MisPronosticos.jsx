@@ -338,11 +338,18 @@ export function MisPronosticos() {
 
                             {pronostico.partido.finalizado && (
                                 <p>
-                                    <strong>
+                                    <span
+                                        className={
+                                            `${calcularPuntos(pronostico) > 0
+                                                ? "badge bg-success"
+                                                : "badge bg-secondary"
+                                            } fs-6`
+                                        }
+                                    >
                                         Puntos obtenidos: {
                                             calcularPuntos(pronostico)
                                         }
-                                    </strong>
+                                    </span>
                                 </p>
                             )}
 
