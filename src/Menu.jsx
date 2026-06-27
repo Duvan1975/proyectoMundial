@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { API_URL } from "./config";
 import { FormularioUsuarios } from "./FormularioUsuario";
 import { TablaUsuarios } from "./TablaUsuarios";
 import { SeleccionarUsuario } from "./SeleccionarUsuario";
@@ -61,6 +62,38 @@ export function Menu() {
                 window.location.reload();
             }
         });
+    };
+
+    const congelarRanking = async () => {
+
+        if (!window.confirm(
+            "¿Desea guardar las posiciones actuales del ranking?\n\n" +
+            "A partir de este momento los movimientos (⬆️⬇️) se calcularán tomando como referencia estas posiciones."
+        )) {
+            return;
+        }
+
+        try {
+
+            const response = await fetch(
+                `${API_URL}/usuarios/congelar-ranking`,
+                {
+                    method: "POST"
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Error al congelar el ranking");
+            }
+
+            alert("✅ Posiciones del ranking guardadas correctamente.");
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("❌ No fue posible guardar las posiciones.");
+        }
     };
 
     return (
@@ -200,6 +233,12 @@ export function Menu() {
                                 }
                             >
                                 Ver Pronósticos
+                            </button>
+                            <button
+                                className="btn btn-warning btn-sm"
+                                onClick={congelarRanking}
+                            >
+                                📸 Congelar Ranking
                             </button>
                             <button
                                 className="btn btn-danger btn-sm flex-fill flex-md-grow-0"
