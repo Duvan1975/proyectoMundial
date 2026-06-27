@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "./config";
+import Swal from "sweetalert2";
 
 export function AdministrarPartidos() {
 
@@ -71,6 +72,10 @@ export function AdministrarPartidos() {
                     },
                     body: JSON.stringify({
                         id: partido.id,
+                        equipoLocal: partido.equipoLocal,
+                        equipoVisitante: partido.equipoVisitante,
+                        fechaPartido: partido.fechaPartido,
+
                         golesLocal: Number(partido.golesLocal),
                         golesVisitante: Number(partido.golesVisitante),
                         finalizado: partido.finalizado,
@@ -103,6 +108,69 @@ export function AdministrarPartidos() {
         }
     };
 
+    const eliminarPartido = async (partido) => {
+
+        const result = await Swal.fire({
+            title: "¿Eliminar partido?",
+            text: `${partido.equipoLocal} vs ${partido.equipoVisitante}`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#dc3545",
+            cancelButtonColor: "#6c757d",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar"
+        });
+
+        if (!result.isConfirmed) {
+            return;
+        }
+
+        try {
+
+            const response = await fetch(
+                `${API_URL}/partidos/${partido.id}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+            if (response.ok) {
+
+                await Swal.fire({
+                    icon: "success",
+                    title: "Partido eliminado",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+
+                cargarPartidos();
+
+            } else {
+
+                const error = await response.text();
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: error
+                });
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "No fue posible eliminar el partido."
+            });
+
+        }
+
+    };
+
     return (
 
         <div className="container">
@@ -132,21 +200,55 @@ export function AdministrarPartidos() {
                                 {partido.fase?.nombre}
                             </p>
 
-                            <div className="row">
+                            <div className="row g-3">
 
-                                <div className="col-md-5">
-
-                                    <label className="form-label">
-                                        {partido.equipoLocal}
+                                {/* Equipos */}
+                                <div className="col-md-6">
+                                    <label className="form-label fw-bold">
+                                        Equipo Local
                                     </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={partido.equipoLocal ?? ""}
+                                        onChange={(e) =>
+                                            actualizarCampo(
+                                                partido.id,
+                                                "equipoLocal",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                </div>
 
+                                <div className="col-md-6">
+                                    <label className="form-label fw-bold">
+                                        Equipo Visitante
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={partido.equipoVisitante ?? ""}
+                                        onChange={(e) =>
+                                            actualizarCampo(
+                                                partido.id,
+                                                "equipoVisitante",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                </div>
+
+                                {/* Marcador */}
+                                <div className="col-md-3">
+                                    <label className="form-label fw-bold">
+                                        Goles Local
+                                    </label>
                                     <input
                                         type="number"
                                         min="0"
                                         className="form-control"
-                                        value={
-                                            partido.golesLocal ?? ""
-                                        }
+                                        value={partido.golesLocal ?? ""}
                                         onChange={(e) =>
                                             actualizarCampo(
                                                 partido.id,
@@ -157,19 +259,15 @@ export function AdministrarPartidos() {
                                     />
                                 </div>
 
-                                <div className="col-md-5">
-
-                                    <label className="form-label">
-                                        {partido.equipoVisitante}
+                                <div className="col-md-3">
+                                    <label className="form-label fw-bold">
+                                        Goles Visitante
                                     </label>
-
                                     <input
                                         type="number"
                                         min="0"
                                         className="form-control"
-                                        value={
-                                            partido.golesVisitante ?? ""
-                                        }
+                                        value={partido.golesVisitante ?? ""}
                                         onChange={(e) =>
                                             actualizarCampo(
                                                 partido.id,
@@ -180,68 +278,83 @@ export function AdministrarPartidos() {
                                     />
                                 </div>
 
-                                <div className="col-md-2 d-flex align-items-end">
-
-                                    <button
-                                        className="btn btn-success w-100"
-                                        onClick={() =>
-                                            guardarResultado(
-                                                partido
+                                {/* Fecha */}
+                                <div className="col-md-6">
+                                    <label className="form-label fw-bold">
+                                        Fecha del Partido
+                                    </label>
+                                    <input
+                                        type="datetime-local"
+                                        className="form-control"
+                                        value={partido.fechaPartido ?? ""}
+                                        onChange={(e) =>
+                                            actualizarCampo(
+                                                partido.id,
+                                                "fechaPartido",
+                                                e.target.value
                                             )
                                         }
+                                    />
+                                </div>
+
+                                {/* Checkboxes */}
+                                <div className="col-md-4">
+                                    <div className="form-check">
+                                        <input
+                                            type="checkbox"
+                                            className="form-check-input"
+                                            checked={partido.finalizado ?? false}
+                                            onChange={(e) =>
+                                                actualizarCampo(
+                                                    partido.id,
+                                                    "finalizado",
+                                                    e.target.checked
+                                                )
+                                            }
+                                        />
+                                        <label className="form-check-label">
+                                            Finalizado
+                                        </label>
+                                    </div>
+
+                                    <div className="form-check mt-2">
+                                        <input
+                                            type="checkbox"
+                                            className="form-check-input"
+                                            checked={partido.habilitadoPronostico ?? false}
+                                            onChange={(e) =>
+                                                actualizarCampo(
+                                                    partido.id,
+                                                    "habilitadoPronostico",
+                                                    e.target.checked
+                                                )
+                                            }
+                                        />
+                                        <label className="form-check-label">
+                                            Habilitado Pronóstico
+                                        </label>
+                                    </div>
+                                </div>
+
+                                {/* Botón */}
+                                <div className="col-md-8 d-flex justify-content-end gap-2 align-items-end">
+
+                                    <button
+                                        className="btn btn-success px-4"
+                                        onClick={() => guardarResultado(partido)}
                                     >
-                                        Guardar
+                                        💾 Guardar
+                                    </button>
+
+                                    <button
+                                        className="btn btn-danger px-4"
+                                        onClick={() => eliminarPartido(partido)}
+                                    >
+                                        🗑 Eliminar
                                     </button>
 
                                 </div>
 
-                                <div className="row mb-3">
-                                    <div className="col-md-6">
-                                        <div className="form-check">
-                                            <input
-                                                type="checkbox"
-                                                className="form-check-input"
-                                                checked={
-                                                    partido.finalizado ?? false
-                                                }
-                                                onChange={(e) =>
-                                                    actualizarCampo(
-                                                        partido.id,
-                                                        "finalizado",
-                                                        e.target.checked
-                                                    )
-                                                }
-                                            />
-
-                                            <label className="form-check-label">
-                                                Finalizado
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-md-6">
-                                        <div className="form-check">
-                                            <input
-                                                type="checkbox"
-                                                className="form-check-input"
-                                                checked={
-                                                    partido.habilitadoPronostico ?? false
-                                                }
-                                                onChange={(e) =>
-                                                    actualizarCampo(
-                                                        partido.id,
-                                                        "habilitadoPronostico",
-                                                        e.target.checked
-                                                    )
-                                                }
-                                            />
-
-                                            <label className="form-check-label">
-                                                Habilitado Pronóstico
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
