@@ -221,6 +221,25 @@ export function AdministrarPartidos() {
                                     />
                                 </div>
 
+                                                                <div className="col-md-3">
+                                    <label className="form-label fw-bold">
+                                        Goles Local
+                                    </label>
+                                    <input
+                                        type="number"
+                                        min="0"
+                                        className="form-control"
+                                        value={partido.golesLocal ?? ""}
+                                        onChange={(e) =>
+                                            actualizarCampo(
+                                                partido.id,
+                                                "golesLocal",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                </div>
+
                                 <div className="col-md-6">
                                     <label className="form-label fw-bold">
                                         Equipo Visitante
@@ -239,7 +258,7 @@ export function AdministrarPartidos() {
                                     />
                                 </div>
 
-                                {/* Marcador */}
+                                {/* Marcador 
                                 <div className="col-md-3">
                                     <label className="form-label fw-bold">
                                         Goles Local
@@ -257,7 +276,7 @@ export function AdministrarPartidos() {
                                             )
                                         }
                                     />
-                                </div>
+                                </div>*/}
 
                                 <div className="col-md-3">
                                     <label className="form-label fw-bold">
