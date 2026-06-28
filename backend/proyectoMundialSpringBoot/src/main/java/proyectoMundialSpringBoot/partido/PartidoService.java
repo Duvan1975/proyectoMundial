@@ -141,6 +141,7 @@ public class PartidoService {
                             partido.getEquipoLocal(),
                             partido.getEquipoVisitante(),
                             partido.getFechaPartido(),
+                            partido.getFase().getNombre(),
 
                             pronostico != null
                                     ? pronostico.getGolesLocalPronosticado()

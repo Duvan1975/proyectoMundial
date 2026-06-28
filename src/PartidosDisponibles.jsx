@@ -200,6 +200,9 @@ export function PartidosDisponibles() {
                     className="card mb-3"
                 >
                     <div className="card-body">
+                        <span className="text-muted mb-1">
+                            {partido.faseNombre}
+                        </span>
                         <h5>
                             {renderTeamName(partido.equipoLocal)}
                             {" vs "}

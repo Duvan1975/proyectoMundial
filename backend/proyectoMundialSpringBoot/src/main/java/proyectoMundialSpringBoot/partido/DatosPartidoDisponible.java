@@ -12,6 +12,8 @@ public record DatosPartidoDisponible(
 
         LocalDateTime fechaPartido,
 
+        String faseNombre,
+
         Integer pronosticoLocal,
 
         Integer pronosticoVisitante,

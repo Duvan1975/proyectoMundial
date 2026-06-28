@@ -298,6 +298,10 @@ export function MisPronosticos() {
 
                         <div className="card-body">
 
+                            <p className="text-muted mb-1">
+                                <strong>{pronostico.partido.fase.nombre}</strong>
+                            </p>
+
                             <h5>
                                 {renderTeamName(pronostico.partido.equipoLocal)}
                                 {" vs "}
