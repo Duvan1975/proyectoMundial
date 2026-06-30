@@ -71,6 +71,21 @@ export function MisPronosticos() {
 
     }, []);
 
+    const PUNTAJES = {
+        RONDAS: {
+            EXACTO: 10,
+            DIFERENCIA: 7,
+            GANADOR: 5,
+            EMPATE: 5
+        },
+        ELIMINACION: {
+            EXACTO: 20,
+            DIFERENCIA: 14,
+            GANADOR: 10,
+            EMPATE: 10
+        }
+    };
+
     const calcularPuntos = (pronostico) => {
 
         const realLocal =
@@ -85,12 +100,33 @@ export function MisPronosticos() {
         const pronVisitante =
             pronostico.golesVisitantePronosticado;
 
+
+        const fase = pronostico.partido.fase?.nombre;
+
+        console.log("Partido:", pronostico.partido.id);
+        console.log("Fase:", fase);
+
+        const esEliminacion = [
+            "DIECISEISAVOS",
+            "OCTAVOS",
+            "CUARTOS",
+            "SEMIFINAL",
+            "TERCER_PUESTO",
+            "FINAL"
+        ].includes(fase);
+
+        console.log("¿Es eliminación?", esEliminacion);
+
+        const puntos = esEliminacion
+            ? PUNTAJES.ELIMINACION
+            : PUNTAJES.RONDAS;
+
         // Marcador exacto
         if (
             realLocal === pronLocal &&
             realVisitante === pronVisitante
         ) {
-            return 10;
+            return puntos.EXACTO;
         }
 
         // Empate exacto ya fue cubierto arriba
@@ -99,7 +135,7 @@ export function MisPronosticos() {
             realLocal === realVisitante &&
             pronLocal === pronVisitante
         ) {
-            return 5;
+            return puntos.EMPATE;
         }
 
         const ganadorReal =
@@ -123,7 +159,7 @@ export function MisPronosticos() {
 
         // Si es empate ya se devolvió 10 o 5 arriba
         if (ganadorReal === "EMPATE") {
-            return 5;
+            return puntos.EMPATE;
         }
 
         const diferenciaReal =
@@ -133,10 +169,10 @@ export function MisPronosticos() {
             Math.abs(pronLocal - pronVisitante);
 
         if (diferenciaReal === diferenciaPron) {
-            return 7;
+            return puntos.DIFERENCIA;
         }
 
-        return 5;
+        return puntos.GANADOR;
     };
 
     const validarTotalPuntos = async () => {

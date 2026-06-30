@@ -221,7 +221,7 @@ export function AdministrarPartidos() {
                                     />
                                 </div>
 
-                                                                <div className="col-md-3">
+                                <div className="col-md-3">
                                     <label className="form-label fw-bold">
                                         Goles Local
                                     </label>
