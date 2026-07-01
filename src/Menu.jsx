@@ -276,52 +276,82 @@ export function Menu() {
                                 íntegramente a la persona con mayor puntuación al final del mundial.
                             </p>
 
-                            <hr />
+<hr />
 
-                            <h5>🎯 Cómo funciona la puntuación</h5>
+<h6 className="mb-3 fw-bold">
+  <span className="me-2">📈</span> Incremento de puntos por fase
+</h6>
 
-                            <h6 className="mt-3">⚽ Fase de Rondas</h6>
+<div className="table-responsive">
+  <table className="table table-bordered text-center align-middle">
+    <thead>
+      <tr style={{ background: "linear-gradient(135deg, #1a1a2e, #16213e)", color: "white" }}>
+        <th style={{ minWidth: "120px" }}>Fase</th>
+        <th style={{ background: "#ffd700", color: "#1a1a2e" }}>🎯 Exacto</th>
+        <th style={{ background: "#ffa500", color: "#1a1a2e" }}>⚡ Dif. Gol</th>
+        <th style={{ background: "#00b894", color: "white" }}>🏅 Ganador</th>
+        <th style={{ background: "#0984e3", color: "white" }}>🤝 Empate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style={{ background: "#f8f9fa", fontWeight: "normal" }}>
+        <td><span className="badge bg-secondary">🔵</span> Grupos</td>
+        <td><strong>10</strong></td>
+        <td><strong>7</strong></td>
+        <td><strong>5</strong></td>
+        <td><strong>5</strong></td>
+      </tr>
+      <tr style={{ background: "#e8f5e9", fontWeight: "500" }}>
+        <td><span className="badge bg-success">🟢</span> Dieciseisavos</td>
+        <td><strong>20</strong></td>
+        <td><strong>14</strong></td>
+        <td><strong>10</strong></td>
+        <td><strong>10</strong></td>
+      </tr>
+      <tr style={{ background: "#e3f2fd", fontWeight: "500" }}>
+        <td><span className="badge bg-primary">🔵</span> Octavos</td>
+        <td><strong>30</strong></td>
+        <td><strong>21</strong></td>
+        <td><strong>15</strong></td>
+        <td><strong>15</strong></td>
+      </tr>
+      <tr style={{ background: "#fff3e0", fontWeight: "500" }}>
+        <td><span className="badge bg-warning">🟠</span> Cuartos</td>
+        <td><strong>40</strong></td>
+        <td><strong>28</strong></td>
+        <td><strong>20</strong></td>
+        <td><strong>20</strong></td>
+      </tr>
+      <tr style={{ background: "#fce4ec", fontWeight: "500" }}>
+        <td><span className="badge bg-danger">🔴</span> Semifinal</td>
+        <td><strong>50</strong></td>
+        <td><strong>35</strong></td>
+        <td><strong>25</strong></td>
+        <td><strong>25</strong></td>
+      </tr>
+      <tr style={{ background: "#f3e5f5", fontWeight: "500" }}>
+        <td><span className="badge bg-purple">🟣</span> Tercer Puesto</td>
+        <td><strong>60</strong></td>
+        <td><strong>42</strong></td>
+        <td><strong>30</strong></td>
+        <td><strong>30</strong></td>
+      </tr>
+      <tr style={{ background: "linear-gradient(135deg, #ffd700, #ff6b00)", color: "white", fontWeight: "700" }}>
+        <td>🏆 Final</td>
+        <td>70</td>
+        <td>49</td>
+        <td>35</td>
+        <td>35</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-                            <p><strong>Ejemplo 1:</strong> Marcador real: Colombia 2 - Brasil 1</p>
-                            <ul>
-                                <li>2-1 → <strong>10 puntos</strong> (Marcador exacto)</li>
-                                <li>1-0 → <strong>7 puntos</strong> (Misma diferencia de gol)</li>
-                                <li>3-1 → <strong>5 puntos</strong> (Ganador correcto, diferencia distinta)</li>
-                                <li>1-1 → <strong>0 puntos</strong></li>
-                            </ul>
+<div className="alert alert-warning mt-3">
+  <strong>🏆 ¡Atención!</strong> A medida que avanza el campeonato, los puntos aumentan para mantener la emoción y permitir <strong>remontadas épicas</strong> en la clasificación.
+</div>
 
-                            <p><strong>Ejemplo 2:</strong> Marcador real: Colombia 1 - Brasil 1</p>
-                            <ul>
-                                <li>1-1 → <strong>10 puntos</strong> (Empate exacto)</li>
-                                <li>2-2 → <strong>5 puntos</strong> (Empate con marcador diferente)</li>
-                                <li>2-1 → <strong>0 puntos</strong></li>
-                            </ul>
-
-                            <hr />
-
-                            <h6>🏆 Fases Eliminatorias (Dieciseisavos)</h6>
-
-                            <p><strong>Ejemplo 1:</strong> Marcador real: Colombia 2 - Brasil 1</p>
-                            <ul>
-                                <li>2-1 → <strong>20 puntos</strong> (Marcador exacto)</li>
-                                <li>1-0 → <strong>14 puntos</strong> (Misma diferencia de gol)</li>
-                                <li>3-1 → <strong>10 puntos</strong> (Ganador correcto, diferencia distinta)</li>
-                                <li>1-1 → <strong>0 puntos</strong></li>
-                            </ul>
-
-                            <p><strong>Ejemplo 2:</strong> Marcador real: Colombia 1 - Brasil 1</p>
-                            <ul>
-                                <li>1-1 → <strong>20 puntos</strong> (Empate exacto)</li>
-                                <li>2-2 → <strong>10 puntos</strong> (Empate con marcador diferente)</li>
-                                <li>2-1 → <strong>0 puntos</strong></li>
-                            </ul>
-
-                            <hr />
-
-                            <p className="text-muted mb-0">
-                                📌 <strong>Nota:</strong> A partir de los <strong>Dieciseisavos de Final</strong>, la puntuación se incrementa para hacer más emocionante la fase de eliminación directa.
-                            </p>
-                            <hr />
+<hr />
                             <h5>⚽ Cómo usar la app</h5>
                             <ul>
                                 <li><strong>Pronosticar:</strong> Haz tus apuestas de los partidos disponibles. Una vez guardado, no se puede modificar.</li>
