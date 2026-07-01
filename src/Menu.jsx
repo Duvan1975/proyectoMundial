@@ -279,23 +279,49 @@ export function Menu() {
                             <hr />
 
                             <h5>🎯 Cómo funciona la puntuación</h5>
+
+                            <h6 className="mt-3">⚽ Fase de Rondas</h6>
+
                             <p><strong>Ejemplo 1:</strong> Marcador real: Colombia 2 - Brasil 1</p>
                             <ul>
-                                <li>2-1 → <strong>10 puntos</strong> (exacto)</li>
-                                <li>1-0 → <strong>7 puntos</strong> (mismo ganador, mismos goles de diferencia)</li>
-                                <li>3-1 → <strong>5 puntos</strong> (acierta ganador, diferencia de goles distinta)</li>
+                                <li>2-1 → <strong>10 puntos</strong> (Marcador exacto)</li>
+                                <li>1-0 → <strong>7 puntos</strong> (Misma diferencia de gol)</li>
+                                <li>3-1 → <strong>5 puntos</strong> (Ganador correcto, diferencia distinta)</li>
                                 <li>1-1 → <strong>0 puntos</strong></li>
                             </ul>
 
                             <p><strong>Ejemplo 2:</strong> Marcador real: Colombia 1 - Brasil 1</p>
                             <ul>
-                                <li>1-1 → <strong>10 puntos</strong></li>
-                                <li>2-2 → <strong>5 puntos</strong></li>
+                                <li>1-1 → <strong>10 puntos</strong> (Empate exacto)</li>
+                                <li>2-2 → <strong>5 puntos</strong> (Empate con marcador diferente)</li>
                                 <li>2-1 → <strong>0 puntos</strong></li>
                             </ul>
 
                             <hr />
 
+                            <h6>🏆 Fases Eliminatorias (Dieciseisavos)</h6>
+
+                            <p><strong>Ejemplo 1:</strong> Marcador real: Colombia 2 - Brasil 1</p>
+                            <ul>
+                                <li>2-1 → <strong>20 puntos</strong> (Marcador exacto)</li>
+                                <li>1-0 → <strong>14 puntos</strong> (Misma diferencia de gol)</li>
+                                <li>3-1 → <strong>10 puntos</strong> (Ganador correcto, diferencia distinta)</li>
+                                <li>1-1 → <strong>0 puntos</strong></li>
+                            </ul>
+
+                            <p><strong>Ejemplo 2:</strong> Marcador real: Colombia 1 - Brasil 1</p>
+                            <ul>
+                                <li>1-1 → <strong>20 puntos</strong> (Empate exacto)</li>
+                                <li>2-2 → <strong>10 puntos</strong> (Empate con marcador diferente)</li>
+                                <li>2-1 → <strong>0 puntos</strong></li>
+                            </ul>
+
+                            <hr />
+
+                            <p className="text-muted mb-0">
+                                📌 <strong>Nota:</strong> A partir de los <strong>Dieciseisavos de Final</strong>, la puntuación se incrementa para hacer más emocionante la fase de eliminación directa.
+                            </p>
+                            <hr />
                             <h5>⚽ Cómo usar la app</h5>
                             <ul>
                                 <li><strong>Pronosticar:</strong> Haz tus apuestas de los partidos disponibles. Una vez guardado, no se puede modificar.</li>

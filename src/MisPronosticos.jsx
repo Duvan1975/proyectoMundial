@@ -380,15 +380,15 @@ export function MisPronosticos() {
                                 <p>
                                     <span
                                         className={
-                                            `${calcularPuntos(pronostico) > 0
-                                                ? "badge bg-success"
-                                                : "badge bg-secondary"
+                                            `${calcularPuntos(pronostico) === 20
+                                                ? "badge bg-warning text-dark"
+                                                : calcularPuntos(pronostico) > 0
+                                                    ? "badge bg-success"
+                                                    : "badge bg-secondary"
                                             } fs-6`
                                         }
                                     >
-                                        Puntos obtenidos: {
-                                            calcularPuntos(pronostico)
-                                        }
+                                        Puntos obtenidos: {calcularPuntos(pronostico)}
                                     </span>
                                 </p>
                             )}
